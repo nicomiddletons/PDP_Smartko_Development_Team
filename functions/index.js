@@ -49,8 +49,24 @@ app.post('/api/create', (req, res) => {
 });
 
 
-//Read
+//Read a specific timestamp based on ID
 //Get
+app.get('/api/read/:id', (req, res) => {
+    
+    (async () => {
+            try{
+                const document = db.collection('switch').doc(req.params.id);
+                let switchData = await document.get();
+                let response = switchData.data();
+
+                return res.status(200).send(response);
+            }
+            catch(error){
+                console.log(error);
+                return res.status(500).send(error);
+            }
+    })();
+});
 
 //Update
 //Put
