@@ -68,6 +68,39 @@ app.get('/api/read/:id', (req, res) => {
     })();
 });
 
+//Read all timestamps
+//Get
+app.get('/api/read', (req, res) => {
+    
+    (async () => {
+            try{
+                let query = db.collection('switch');
+                let response = [];
+
+                await query.get().then(querySnapshot => {
+                    let docs = querySnapshot.docs; //the result of the query
+
+                    for(let doc of docs){
+                        const selectedItem = {
+                            id: doc.id,
+                            timestamp: doc.data().timestamp,
+                            temp: doc.data().temp,
+                            humidity: doc.data().humidity,
+                            smoke_level: doc.data().smoke_level
+                        };
+                        response.push(selectedItem);
+                    }
+                    return response; //each then should return a value
+                })
+                return res.status(200).send(response);
+            }
+            catch(error){
+                console.log(error);
+                return res.status(500).send(error);
+            }
+    })();
+});
+
 //Update
 //Put
 
