@@ -1,10 +1,26 @@
 import "./App.css";
 import Chart, { Chart as ChartJS } from "chart.js/auto";
 import { Bar, Doughnut, Line } from "react-chartjs-2";
+import axios from "axios";
 
 import switchData from "./data/test.json";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [axiosData, setAxiosData] = useState(null);
+
+  // getting the data from the API using axios 
+  useEffect(() => {
+    axios
+      .get("https://app-lf6etr3jqa-uc.a.run.app/api/read")
+      .then((response) => {
+        setAxiosData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
+
   // temperature range to display in the pie chart
   const tempRangeData = [
     { range: "0-10°C", count: 0 },
@@ -31,98 +47,107 @@ function App() {
 
   return (
     <>
-      <div className="Main">
-        <div className="chartcard temperature">
-          Temperature
-          <Doughnut
-            data={{
-              labels: tempLabels,
-              datasets: [
-                {
-                  label: "Temperature Ranges",
-                  data: tempCounts,
-                  backgroundColor: [
-                    "rgba(43, 63, 229, 0.8)",
-                    "rgba(250, 192, 19, 0.8)",
-                    "rgba(253, 135, 135, 0.8)",
-                    "rgba(63, 229, 43, 0.8)",
-                  ],
-                  borderColor: [
-                    "rgba(43, 63, 229, 0.8)",
-                    "rgba(250, 192, 19, 0.8)",
-                    "rgba(253, 135, 135, 0.8)",
-                    "rgba(63, 229, 43, 0.8)",
-                  ],
-                },
-              ],
-            }}
-            options={{
-              plugins: {
-                title: {
-                  text: "Ranges",
-                  display: false,
-                },
-              },
-            }}
-          />
+      <div className="main">
+        <div className="panel">
+        <div className="katkologo">
+        <img src={`./katko_logo.svg`} alt="Katko Logo" />
+      </div>
+          <div className="head"><img src={`./control_panel_icon.svg`} alt="control panel" /> Control panel</div>
+          <div className="tab"></div>
         </div>
-        <div className="chartcard humidity">
-          Humidity
-          <Line
-            data={{
-              labels: switchData.map((data) => data.timestamp),
-              datasets: [
-                {
-                  label: "humidity",
-                  data: switchData.map((data) => data.humidity),
-                  backgroundColor: "#064FF0",
-                  borderColor: "#064FF0",
+        <div className="graph">
+          <div className="chartcard temperature">
+            Temperature
+            <Doughnut
+              data={{
+                labels: tempLabels,
+                datasets: [
+                  {
+                    label: "Temperature Ranges",
+                    data: tempCounts,
+                    backgroundColor: [
+                      "rgba(43, 63, 229, 0.8)",
+                      "rgba(250, 192, 19, 0.8)",
+                      "rgba(253, 135, 135, 0.8)",
+                      "rgba(63, 229, 43, 0.8)",
+                    ],
+                    borderColor: [
+                      "rgba(43, 63, 229, 0.8)",
+                      "rgba(250, 192, 19, 0.8)",
+                      "rgba(253, 135, 135, 0.8)",
+                      "rgba(63, 229, 43, 0.8)",
+                    ],
+                  },
+                ],
+              }}
+              options={{
+                plugins: {
+                  title: {
+                    text: "Ranges",
+                    display: false,
+                  },
                 },
-              ],
-            }}
-            options={{
-              elements: {
-                line: {
-                  tension: 0.5,
+              }}
+            />
+          </div>
+          <div className="chartcard humidity">
+            Humidity
+            <Line
+              data={{
+                labels: switchData.map((data) => data.timestamp),
+                datasets: [
+                  {
+                    label: "humidity",
+                    data: switchData.map((data) => data.humidity),
+                    backgroundColor: "#064FF0",
+                    borderColor: "#064FF0",
+                  },
+                ],
+              }}
+              options={{
+                elements: {
+                  line: {
+                    tension: 0.5,
+                  },
                 },
-              },
-              plugins: {
-                title: {
-                  text: "Humidity graph test",
+                plugins: {
+                  title: {
+                    text: "Humidity graph test",
+                  },
                 },
-              },
-            }}
-          />
-        </div>
+              }}
+            />
+          </div>
 
-        <div className="chartcard power_consumption">
-          Power Consumption
-          <Bar
-            data={{
-              labels: switchData.map((data) => data.timestamp),
-              datasets: [
-                {
-                  label: "power consumption",
-                  data: switchData.map((data) => data.power_consumption),
-                  backgroundColor: [
-                    "rgba(43, 63, 229, 0.8)",
-                    "rgba(250, 192, 19, 0.8)",
-                    "rgba(253, 135, 135, 0.8)",
-                  ],
-                  borderRadius: 5,
+          <div className="chartcard power_consumption">
+            Power Consumption
+            <Bar
+              data={{
+                labels: switchData.map((data) => data.timestamp),
+                datasets: [
+                  {
+                    label: "power consumption",
+                    data: switchData.map((data) => data.power_consumption),
+                    backgroundColor: [
+                      "rgba(43, 63, 229, 0.8)",
+                      "rgba(250, 192, 19, 0.8)",
+                      "rgba(253, 135, 135, 0.8)",
+                    ],
+                    borderRadius: 5,
+                  },
+                ],
+              }}
+              options={{
+                plugins: {
+                  title: {
+                    text: "power consumption",
+                  },
                 },
-              ],
-            }}
-            options={{
-              plugins: {
-                title: {
-                  text: "power consumption",
-                },
-              },
-            }}
-          />
+              }}
+            />
+          </div>
+          <div className="chartcard gas_detection">Gas Detection</div>
         </div>
-        <div className="chartcard gas_detection">Gas Detection</div>
       </div>
     </>
   );
