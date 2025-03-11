@@ -29,6 +29,7 @@ function App() {
     { range: "31-40°C", count: 0 },
   ];
 
+  // get switch data
   switchData.forEach((data) => {
     const temp = data.temp;
     if (temp <= 10) {
