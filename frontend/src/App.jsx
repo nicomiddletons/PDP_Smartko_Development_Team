@@ -6,6 +6,8 @@ import axios from "axios";
 import switchData from "./data/test.json";
 import { useEffect, useState } from "react";
 
+import Account from "./pages/Account"
+
 function App() {
   const [axiosData, setAxiosData] = useState(null);
 
@@ -47,7 +49,17 @@ function App() {
   const tempCounts = tempRangeData.map((data) => data.count);
 
   return (
+
     <>
+    
+    <BrowserRouter>
+      <Routes>
+        <Route path="account" element={<Account />} />
+        <Route path="app" element={<App />} />
+      </Routes>
+    </BrowserRouter>
+
+
       <div className="main">
         <div className="panel">
         <div className="katkologo">
@@ -155,3 +167,7 @@ function App() {
 }
 
 export default App;
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
