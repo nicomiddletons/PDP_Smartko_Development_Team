@@ -1,11 +1,9 @@
 .main {
-  height: 100vh;
+  height: 100%;
   width: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  align-items: center;
-  justify-content: center;
-  background-color: #ddd;
+  background-color: #21668D;
 }
 
 .graph {
@@ -18,21 +16,83 @@
   padding: 2vw;
   align-items: center;
   justify-content: center;
-  background-color: #ddd;
+  background-color: #21668D;
 }
 
 .panel {
+  display: grid;
+  grid-template-columns: 3fr 1fr 1fr;
+  padding: 10px;
+  background-color: #0F141E;
+  width: auto;
+  height: 150px;
+}
+
+.katkologo {
+  width: auto;
+  height: 150px;
+}
+
+.logo-img {
+  width: auto;
+  height: 150px;
+  padding-bottom: 10px;
+}
+
+.control-panel {
+  display: flex; 
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+  width: auto;
+  height: 150px;
+  color: #efefef;
+}
+
+.account {
+  display: flex; 
+  flex-direction: column;
+  align-items: center; 
+  justify-content: center; 
+  width: auto;
+  height: 150px;
+  color: #efefef;
+}
+.sub-panel {
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   padding: 10px;
 }
 
-.head {
-  padding: 32%;
+.current-page{
+  color: #ffffff;
+  padding-left: 30px;
+}
+
+.form-control-select {
+  width: 300px;
+  color: white;
+}
+
+.form-control-select .MuiFilledInput-root {
+  border-radius: 20px; /* Adjust the border radius as desired */
+  background-color: #729AB8; /* Example background color */
+  color: white; /* Example text color */
+}
+.form-control-select .MuiFilledInput-root:hover {
+  background-color: #729AB8; /* Optional: Change color on hover */
+}
+
+.form-control-select .MuiInputBase-root {
+  color: #636363; /* Change the Select text color */
+}
+
+.form-control-select .MuiInputLabel-root {
+  color: #636363; /* Change the label text color */
 }
 
 .chartcard {
-  background-color: #efefef;
+  background-color: #272E44;
   border-radius: 0.5em;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   padding: 1em;
@@ -44,6 +104,7 @@
   align-items: center;
   justify-content: center;
   height: 95%;
+  color: #efefef;
 }
 
 .humidity {
@@ -52,20 +113,14 @@
   align-items: center;
   justify-content: center;
   height: 95%;
+  color: #efefef;
 }
 
-.gas_detection {
+.smoke_level {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   height: 95%;
-}
-
-.power_consumption {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 95%;
+  color: #efefef;
 }
