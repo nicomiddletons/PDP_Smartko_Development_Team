@@ -13,19 +13,95 @@ import { useEffect, useState } from "react";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 function App() {
-  const [axiosData, setAxiosData] = useState(null);
-
+  const [axiosData, setAxiosData] = useState([]);
+  const [currentTemp, setCurrentTemp] = useState(0);
+  const [currentHumidity, setCurrentHumidity] = useState(0);
+  const [currentSmokeLevel, setCurrentSmokeLevel] = useState(0);
   // getting the data from the API using axios
+  // useEffect(() => {
+  //   axios
+  //     .get("https://app-lf6etr3jqa-uc.a.run.app/api/read")
+  //     .then((response) => {
+  //       setAxiosData(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching data:", error);
+  //     });
+  // }, []);
+
   useEffect(() => {
+    // Fetch data using axios
     axios
       .get("https://app-lf6etr3jqa-uc.a.run.app/api/read")
       .then((response) => {
-        setAxiosData(response.data);
+        const data = response.data;
+
+        // Find the entry with the highest ID
+        const latestEntry = data.reduce((max, item) =>
+          parseInt(item.id, 10) > parseInt(max.id, 10) ? item : max
+        );
+
+        // Set the most recent temperature value
+        setAxiosData(data);
+        setCurrentTemp(latestEntry?.temp || 0);
+        setCurrentHumidity(latestEntry?.humidity || 0);
+        setCurrentSmokeLevel(latestEntry?.smoke_level || 0);
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
       });
   }, []);
+
+  // Data for the temperature gauge chart
+  const gaugeTempData = {
+    labels: ["Temperature"],
+    datasets: [
+      {
+        data: [currentTemp, 100 - currentTemp], // Display current temperature out of 100
+        backgroundColor: ["#36A2EB", "#E0E0E0"], // Blue for temp, gray for remaining
+        borderWidth: 0, // No border
+      },
+    ],
+  };
+
+  // Data for the humidity gauge chart
+  const gaugeHumidityData = {
+    labels: ["Humidity"],
+    datasets: [
+      {
+        data: [currentHumidity, 100 - currentHumidity], // Display current temperature out of 100
+        backgroundColor: ["#36A2EB", "#E0E0E0"], // Blue for temp, gray for remaining
+        borderWidth: 0, // No border
+      },
+    ],
+  };
+
+  // Data for the smoke level gauge chart
+  const gaugeSmokeLevelData = {
+    labels: ["Smoke Level"],
+    datasets: [
+      {
+        data: [currentSmokeLevel, 1000 - currentSmokeLevel], // Display current temperature out of 100
+        backgroundColor: ["#36A2EB", "#E0E0E0"], // Blue for temp, gray for remaining
+        borderWidth: 0, // No border
+      },
+    ],
+  };
+
+  // Options for any gauge chart
+  const gaugeOptions = {
+    aspectRatio: 2,
+    circumference: 180,
+    rotation: -90,
+    plugins: {
+      tooltip: {
+        enabled: true,
+      },
+      legend: {
+        display: false,
+      },
+    },
+  };
 
   // temperature range to display in the pie chart
   const tempRangeData = [
@@ -110,169 +186,189 @@ function App() {
                   onChange={handleChange}
                   aria-label="lab API tabs example"
                 >
-                  <Tab label="Item One" value="1" />
-                  <Tab label="Item Two" value="2" />
-                  <Tab label="Item Three" value="3" />
+                  <Tab label="Current" value="1" />
+                  <Tab label="Week" value="2" />
+                  <Tab label="Month" value="3" />
                 </TabList>
               </Box>
-              <TabPanel value="1">Item One</TabPanel>
-              <TabPanel value="2">Item Two</TabPanel>
-              <TabPanel value="3">Item Three</TabPanel>
             </TabContext>
           </div>
         </div>
-        <div className="graph">
-          <div className="chartcard temperature">
-            Temperature
-            <Doughnut
-              data={{
-                labels: tempLabels,
-                datasets: [
-                  {
-                    label: "Temperature Ranges",
-                    data: tempCounts,
-                    backgroundColor: [
-                      "rgba(169, 213, 192, 1)",
-                      "rgba(33, 102, 141, 1)",
-                      "rgb(64, 92, 126)",
-                      "rgb(64, 121, 130)",
-                    ],
-                    borderColor: [
-                      "rgba(169, 213, 192, 1)",
-                      "rgba(33, 102, 141, 1)",
-                      "rgb(64, 92, 126)",
-                      "rgb(64, 121, 130)",
-                    ],
-                  },
-                ],
-              }}
-              options={{
-                plugins: {
-                  title: {
-                    text: "Ranges",
-                    display: false,
-                  },
-                  legend: {
-                    labels: {
-                      color: "white", // Legend text color
-                    },
-                  },
-                },
-              }}
-            />
-          </div>
-          <div className="chartcard humidity">
-            Humidity
-            <Line
-              data={{
-                labels: switchData.map((data) => data.timestamp),
-                datasets: [
-                  {
-                    label: "humidity",
-                    data: switchData.map((data) => data.humidity),
-                    backgroundColor: "#FFFFFF",
-                    borderColor: "#729AB8",
-                  },
-                ],
-              }}
-              options={{
-                elements: {
-                  line: {
-                    tension: 0.3,
-                  },
-                },
-                plugins: {
-                  title: {
-                    text: "Humidity graph test",
-                    color: "white",
-                  },
-                  legend: {
-                    labels: {
-                      color: "white", // Legend text color
-                    },
-                  },
-                },
-                scales: {
-                  x: {
-                    title: {
-                      display: true,
-                      text: "Time",
-                      color: "white",
-                    },
-                    ticks: {
-                      color: "lightgray",
-                    },
-                  },
-                  y: {
-                    title: {
-                      display: true,
-                      text: "Humidity (%)",
-                      color: "white",
-                    },
-                    ticks: {
-                      color: "lightgray", 
-                    },
-                  },
-                },
-              }}
-            />
-          </div>
+        <div className="tabs">
+          <TabContext value={value}>
+            <TabPanel value="1">
+              <div className="graph">
+                <div className="chartcard temperature">
+                  <h3>Current Temperature: {currentTemp}°C</h3>
+                  <Doughnut data={gaugeTempData} options={gaugeOptions} />
+                </div>
+                <div className="chartcard humidity">
+                  <h3>Current Humiidty: {currentHumidity}°C</h3>
+                  <Doughnut data={gaugeHumidityData} options={gaugeOptions} />
+                </div>
+                <div className="chartcard smoke_level">
+                  <h3>Current Smoke Level: {currentSmokeLevel}°C</h3>
+                  <Doughnut data={gaugeSmokeLevelData} options={gaugeOptions} />
+                </div>
+              </div>
+            </TabPanel>
+            <TabPanel value="2">
+              <div className="graph">
+                <div className="chartcard temperature">
+                  Temperature
+                  <Line
+                    data={{
+                      labels: tempLabels,
+                      datasets: [
+                        {
+                          label: "Temperature Ranges",
+                          data: tempCounts,
+                          backgroundColor: [
+                            "rgba(169, 213, 192, 1)",
+                            "rgba(33, 102, 141, 1)",
+                            "rgb(64, 92, 126)",
+                            "rgb(64, 121, 130)",
+                          ],
+                          borderColor: [
+                            "rgba(169, 213, 192, 1)",
+                            "rgba(33, 102, 141, 1)",
+                            "rgb(64, 92, 126)",
+                            "rgb(64, 121, 130)",
+                          ],
+                        },
+                      ],
+                    }}
+                    options={{
+                      plugins: {
+                        title: {
+                          text: "Ranges",
+                          display: false,
+                        },
+                        legend: {
+                          labels: {
+                            color: "white",
+                          },
+                        },
+                      },
+                    }}
+                  />
+                </div>
+                <div className="chartcard humidity">
+                  Humidity
+                  <Line
+                    data={{
+                      labels: switchData.map((data) => data.timestamp),
+                      datasets: [
+                        {
+                          label: "humidity",
+                          data: switchData.map((data) => data.humidity),
+                          backgroundColor: "#FFFFFF",
+                          borderColor: "#729AB8",
+                        },
+                      ],
+                    }}
+                    options={{
+                      elements: {
+                        line: {
+                          tension: 0.3,
+                        },
+                      },
+                      plugins: {
+                        title: {
+                          text: "Humidity graph test",
+                          color: "white",
+                        },
+                        legend: {
+                          labels: {
+                            color: "white",
+                          },
+                        },
+                      },
+                      scales: {
+                        x: {
+                          title: {
+                            display: true,
+                            text: "Time",
+                            color: "white",
+                          },
+                          ticks: {
+                            color: "lightgray",
+                          },
+                        },
+                        y: {
+                          title: {
+                            display: true,
+                            text: "Humidity (%)",
+                            color: "white",
+                          },
+                          ticks: {
+                            color: "lightgray",
+                          },
+                        },
+                      },
+                    }}
+                  />
+                </div>
 
-          <div className="chartcard smoke_level">
-            Smoke Level
-            <Bar
-              data={{
-                labels: switchData.map((data) => data.timestamp),
-                datasets: [
-                  {
-                    label: "power consumption",
-                    data: switchData.map((data) => data.smoke_level),
-                    backgroundColor: [
-                      "rgba(169, 213, 192, 1)",
-                      "rgba(33, 102, 141, 1)",
-                      "rgb(64, 92, 126)",
-                    ],
-                    borderRadius: 5,
-                  },
-                ],
-              }}
-              options={{
-                plugins: {
-                  title: {
-                    text: "smoke level",
-                  },
-                  legend: {
-                    labels: {
-                      color: "white", // Legend text color
-                    },
-                  },
-                },
+                <div className="chartcard smoke_level">
+                  Smoke Level
+                  <Line
+                    data={{
+                      labels: switchData.map((data) => data.timestamp),
+                      datasets: [
+                        {
+                          label: "power consumption",
+                          data: switchData.map((data) => data.smoke_level),
+                          backgroundColor: [
+                            "rgba(169, 213, 192, 1)",
+                            "rgba(33, 102, 141, 1)",
+                            "rgb(64, 92, 126)",
+                          ],
+                          borderRadius: 5,
+                        },
+                      ],
+                    }}
+                    options={{
+                      plugins: {
+                        title: {
+                          text: "smoke level",
+                        },
+                        legend: {
+                          labels: {
+                            color: "white",
+                          },
+                        },
+                      },
 
-                scales: {
-                  x: {
-                    title: {
-                      display: true,
-                      text: "Time",
-                      color: "white",
-                    },
-                    ticks: {
-                      color: "lightgray",
-                    },
-                  },
-                  y: {
-                    title: {
-                      display: true,
-                      text: "smoke level",
-                      color: "white",
-                    },
-                    ticks: {
-                      color: "lightgray", 
-                    },
-                  },
-                },
-              }}
-            />
-          </div>
+                      scales: {
+                        x: {
+                          title: {
+                            display: true,
+                            text: "Time",
+                            color: "white",
+                          },
+                          ticks: {
+                            color: "lightgray",
+                          },
+                        },
+                        y: {
+                          title: {
+                            display: true,
+                            text: "smoke level",
+                            color: "white",
+                          },
+                          ticks: {
+                            color: "lightgray",
+                          },
+                        },
+                      },
+                    }}
+                  />
+                </div>
+              </div>
+            </TabPanel>
+            <TabPanel value="3">Item Three</TabPanel>
+          </TabContext>
         </div>
       </div>
     </>
