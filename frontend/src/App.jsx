@@ -17,73 +17,150 @@ function App() {
   const [currentTemp, setCurrentTemp] = useState(0);
   const [currentHumidity, setCurrentHumidity] = useState(0);
   const [currentSmokeLevel, setCurrentSmokeLevel] = useState(0);
-  // getting the data from the API using axios
-  // useEffect(() => {
-  //   axios
-  //     .get("https://app-lf6etr3jqa-uc.a.run.app/api/read")
-  //     .then((response) => {
-  //       setAxiosData(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data:", error);
-  //     });
-  // }, []);
+  const [chartTempData, setChartTempData] = useState({});
+  const [chartHumidityData, setChartHumidityData] = useState({});
+  const [chartSmokeData, setChartSmokeData] = useState({});
 
   useEffect(() => {
-    // Fetch data using axios
     axios
       .get("https://app-lf6etr3jqa-uc.a.run.app/api/read")
       .then((response) => {
         const data = response.data;
 
-        // Find the entry with the highest ID
+        // Get the most current entry
         const latestEntry = data.reduce((max, item) =>
           parseInt(item.id, 10) > parseInt(max.id, 10) ? item : max
         );
 
-        // Set the most recent temperature value
         setAxiosData(data);
         setCurrentTemp(latestEntry?.temp || 0);
         setCurrentHumidity(latestEntry?.humidity || 0);
         setCurrentSmokeLevel(latestEntry?.smoke_level || 0);
+
+        // Filter data for the last 30 days
+        const today = new Date();
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(today.getDate() - 30);
+
+        const filteredData = data.filter((item) => {
+          const itemDate = new Date(item.timestamp);
+          return itemDate >= thirtyDaysAgo;
+        });
+
+        // Data grouped by date
+        const tempData = {};
+        const humidityData = {};
+        const smokeData = {};
+
+        filteredData.forEach((item) => {
+          const dateKey = new Date(item.timestamp).toISOString().split("T")[0]; // Format YYYY-MM-DD
+
+          // Store temperature data
+          if (!tempData[dateKey]) tempData[dateKey] = [];
+          tempData[dateKey].push(item.temp);
+
+          // Store humidity data
+          if (!humidityData[dateKey]) humidityData[dateKey] = [];
+          humidityData[dateKey].push(item.humidity);
+
+          // Store smoke level data
+          if (!smokeData[dateKey]) smokeData[dateKey] = [];
+          smokeData[dateKey].push(item.smoke_level);
+        });
+
+        const labels = Object.keys(tempData).sort(); // Dates for x-axis
+        const tempPoints = labels.map((date) => {
+          const temps = tempData[date];
+          return temps.reduce((sum, temp) => sum + temp, 0) / temps.length; // Avg temp
+        });
+
+        const humidityPoints = labels.map((date) => {
+          const hums = humidityData[date];
+          return hums.reduce((sum, hum) => sum + hum, 0) / hums.length; // Avg humidity
+        });
+
+        const smokePoints = labels.map((date) => {
+          const smokes = smokeData[date];
+          return smokes.reduce((sum, smoke) => sum + smoke, 0) / smokes.length; // Avg smoke level
+        });
+
+        // Update temp
+        setChartTempData({
+          labels,
+          datasets: [
+            {
+              label: "Temperature (°C)",
+              data: tempPoints,
+              borderColor: "#36A2EB",
+              backgroundColor: "rgba(54, 162, 235, 0.2)",
+              tension: 0.4,
+            },
+          ],
+        });
+
+        // Update humidity
+        setChartHumidityData({
+          labels,
+          datasets: [
+            {
+              label: "Humidity (%)",
+              data: humidityPoints,
+              borderColor: "#FF6384",
+              backgroundColor: "rgba(255, 99, 132, 0.2)",
+              tension: 0.4,
+            },
+          ],
+        });
+
+        // Update smoke level
+        setChartSmokeData({
+          labels,
+          datasets: [
+            {
+              label: "Smoke Level",
+              data: smokePoints,
+              borderColor: "#FFA500",
+              backgroundColor: "rgba(255, 165, 0, 0.2)",
+              tension: 0.4,
+            },
+          ],
+        });
       })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  // Data for the temperature gauge chart
+  // temperature gauge chart
   const gaugeTempData = {
     labels: ["Temperature"],
     datasets: [
       {
-        data: [currentTemp, 100 - currentTemp], // Display current temperature out of 100
-        backgroundColor: ["#36A2EB", "#E0E0E0"], // Blue for temp, gray for remaining
-        borderWidth: 0, // No border
+        data: [currentTemp, 100 - currentTemp], // out of 100
+        backgroundColor: ["#36A2EB", "#E0E0E0"],
+        borderWidth: 0,
       },
     ],
   };
 
-  // Data for the humidity gauge chart
+  // humidity gauge chart
   const gaugeHumidityData = {
     labels: ["Humidity"],
     datasets: [
       {
-        data: [currentHumidity, 100 - currentHumidity], // Display current temperature out of 100
-        backgroundColor: ["#36A2EB", "#E0E0E0"], // Blue for temp, gray for remaining
-        borderWidth: 0, // No border
+        data: [currentHumidity, 100 - currentHumidity], // out of 100
+        backgroundColor: ["#36A2EB", "#E0E0E0"],
+        borderWidth: 0,
       },
     ],
   };
 
-  // Data for the smoke level gauge chart
+  // smoke level gauge chart
   const gaugeSmokeLevelData = {
     labels: ["Smoke Level"],
     datasets: [
       {
-        data: [currentSmokeLevel, 1000 - currentSmokeLevel], // Display current temperature out of 100
-        backgroundColor: ["#36A2EB", "#E0E0E0"], // Blue for temp, gray for remaining
-        borderWidth: 0, // No border
+        data: [currentSmokeLevel, 1000 - currentSmokeLevel], // out of 1000
+        backgroundColor: ["#36A2EB", "#E0E0E0"],
+        borderWidth: 0,
       },
     ],
   };
@@ -103,31 +180,6 @@ function App() {
     },
   };
 
-  // temperature range to display in the pie chart
-  const tempRangeData = [
-    { range: "0-10°C", count: 0 },
-    { range: "11-20°C", count: 0 },
-    { range: "21-30°C", count: 0 },
-    { range: "31-40°C", count: 0 },
-  ];
-
-  // get switch data
-  switchData.forEach((data) => {
-    const temp = data.temp;
-    if (temp <= 10) {
-      tempRangeData[0].count += 1;
-    } else if (temp <= 20) {
-      tempRangeData[1].count += 1;
-    } else if (temp <= 30) {
-      tempRangeData[2].count += 1;
-    } else if (temp <= 40) {
-      tempRangeData[3].count += 1;
-    }
-  });
-
-  const tempLabels = tempRangeData.map((data) => data.range);
-  const tempCounts = tempRangeData.map((data) => data.count);
-
   const [value, setValue] = useState("1");
 
   const handleChange = (event, newValue) => {
@@ -140,6 +192,89 @@ function App() {
     setSwitchSelection(event.target.value);
   };
 
+  // Chart month temp options
+  const chartTempOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Temperature Entries (Last 30 Days)",
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Date",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Temperature (°C)",
+        },
+      },
+    },
+  };
+
+  // Chart month humidity options
+  const chartHumidityOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Humidity Entries (Last 30 Days)",
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Date",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Humidity",
+        },
+      },
+    },
+  };
+
+  // Chart month smoke level options
+  const chartSmokeLevelOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: true,
+        text: "Smoke Level Entries (Last 30 Days)",
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Date",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Smoke Level",
+        },
+      },
+    },
+  };
   return (
     <>
       <div className="main">
@@ -187,8 +322,8 @@ function App() {
                   aria-label="lab API tabs example"
                 >
                   <Tab label="Current" value="1" />
-                  <Tab label="Week" value="2" />
-                  <Tab label="Month" value="3" />
+                  <Tab label="Month" value="2" />
+                  <Tab label="Year" value="3" />
                 </TabList>
               </Box>
             </TabContext>
@@ -215,155 +350,35 @@ function App() {
             <TabPanel value="2">
               <div className="graph">
                 <div className="chartcard temperature">
-                  Temperature
-                  <Line
-                    data={{
-                      labels: tempLabels,
-                      datasets: [
-                        {
-                          label: "Temperature Ranges",
-                          data: tempCounts,
-                          backgroundColor: [
-                            "rgba(169, 213, 192, 1)",
-                            "rgba(33, 102, 141, 1)",
-                            "rgb(64, 92, 126)",
-                            "rgb(64, 121, 130)",
-                          ],
-                          borderColor: [
-                            "rgba(169, 213, 192, 1)",
-                            "rgba(33, 102, 141, 1)",
-                            "rgb(64, 92, 126)",
-                            "rgb(64, 121, 130)",
-                          ],
-                        },
-                      ],
-                    }}
-                    options={{
-                      plugins: {
-                        title: {
-                          text: "Ranges",
-                          display: false,
-                        },
-                        legend: {
-                          labels: {
-                            color: "white",
-                          },
-                        },
-                      },
-                    }}
-                  />
+                  <h2>Last 30 Days Temperature Chart</h2>
+                  {chartTempData.labels ? (
+                    <Line data={chartTempData} options={chartTempOptions} />
+                  ) : (
+                    <p>Loading chart...</p>
+                  )}
                 </div>
                 <div className="chartcard humidity">
-                  Humidity
-                  <Line
-                    data={{
-                      labels: switchData.map((data) => data.timestamp),
-                      datasets: [
-                        {
-                          label: "humidity",
-                          data: switchData.map((data) => data.humidity),
-                          backgroundColor: "#FFFFFF",
-                          borderColor: "#729AB8",
-                        },
-                      ],
-                    }}
-                    options={{
-                      elements: {
-                        line: {
-                          tension: 0.3,
-                        },
-                      },
-                      plugins: {
-                        title: {
-                          text: "Humidity graph test",
-                          color: "white",
-                        },
-                        legend: {
-                          labels: {
-                            color: "white",
-                          },
-                        },
-                      },
-                      scales: {
-                        x: {
-                          title: {
-                            display: true,
-                            text: "Time",
-                            color: "white",
-                          },
-                          ticks: {
-                            color: "lightgray",
-                          },
-                        },
-                        y: {
-                          title: {
-                            display: true,
-                            text: "Humidity (%)",
-                            color: "white",
-                          },
-                          ticks: {
-                            color: "lightgray",
-                          },
-                        },
-                      },
-                    }}
-                  />
+                  <h2>Last 30 Days Humidity Chart</h2>
+                  {chartHumidityData.labels ? (
+                    <Line
+                      data={chartHumidityData}
+                      options={chartHumidityOptions}
+                    />
+                  ) : (
+                    <p>Loading chart...</p>
+                  )}
                 </div>
 
                 <div className="chartcard smoke_level">
-                  Smoke Level
-                  <Line
-                    data={{
-                      labels: switchData.map((data) => data.timestamp),
-                      datasets: [
-                        {
-                          label: "power consumption",
-                          data: switchData.map((data) => data.smoke_level),
-                          backgroundColor: [
-                            "rgba(169, 213, 192, 1)",
-                            "rgba(33, 102, 141, 1)",
-                            "rgb(64, 92, 126)",
-                          ],
-                          borderRadius: 5,
-                        },
-                      ],
-                    }}
-                    options={{
-                      plugins: {
-                        title: {
-                          text: "smoke level",
-                        },
-                        legend: {
-                          labels: {
-                            color: "white",
-                          },
-                        },
-                      },
-
-                      scales: {
-                        x: {
-                          title: {
-                            display: true,
-                            text: "Time",
-                            color: "white",
-                          },
-                          ticks: {
-                            color: "lightgray",
-                          },
-                        },
-                        y: {
-                          title: {
-                            display: true,
-                            text: "smoke level",
-                            color: "white",
-                          },
-                          ticks: {
-                            color: "lightgray",
-                          },
-                        },
-                      },
-                    }}
-                  />
+                  <h2>Last 30 Days Smoke Level Chart</h2>
+                  {chartHumidityData.labels ? (
+                    <Line
+                      data={chartSmokeData}
+                      options={chartSmokeLevelOptions}
+                    />
+                  ) : (
+                    <p>Loading chart...</p>
+                  )}
                 </div>
               </div>
             </TabPanel>
