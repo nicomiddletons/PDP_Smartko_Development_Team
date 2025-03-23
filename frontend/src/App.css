@@ -1,13 +1,17 @@
+.root {
+  background-color: #21668d;
+}
+
 .main {
-  height: 100%;
+  height: 100vh;
   width: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  background-color: #21668D;
+  background-color: #21668d;
 }
 
 .graph {
-  height: 100vh;
+  height: 60vh;
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -16,14 +20,22 @@
   padding: 2vw;
   align-items: center;
   justify-content: center;
-  background-color: #21668D;
+  background-color: #21668d;
+}
+
+h2 {
+  padding-bottom: 20px;
+}
+
+h3 {
+  padding-bottom: 20px;
 }
 
 .panel {
   display: grid;
   grid-template-columns: 3fr 1fr 1fr;
   padding: 10px;
-  background-color: #0F141E;
+  background-color: #0f141e;
   width: auto;
   height: 150px;
 }
@@ -40,20 +52,20 @@
 }
 
 .control-panel {
-  display: flex; 
+  display: flex;
   flex-direction: column;
-  align-items: center; 
-  justify-content: center; 
+  align-items: center;
+  justify-content: center;
   width: auto;
   height: 150px;
   color: #efefef;
 }
 
 .account {
-  display: flex; 
+  display: flex;
   flex-direction: column;
-  align-items: center; 
-  justify-content: center; 
+  align-items: center;
+  justify-content: center;
   width: auto;
   height: 150px;
   color: #efefef;
@@ -62,13 +74,18 @@
   display: grid;
   grid-template-columns: 2fr 1fr 1fr;
   padding: 10px;
+  width: 100%;
 }
 
-.current-page{
+.current-page {
   color: #ffffff;
-  padding-left: 30px;
+  padding-left: 45px;
+  padding-top: 10px;
 }
 
+.select-switch {
+  padding-top: 10px;
+}
 .form-control-select {
   width: 300px;
   color: white;
@@ -76,11 +93,11 @@
 
 .form-control-select .MuiFilledInput-root {
   border-radius: 20px; /* Adjust the border radius as desired */
-  background-color: #729AB8; /* Example background color */
+  background-color: #729ab8; /* Example background color */
   color: white; /* Example text color */
 }
 .form-control-select .MuiFilledInput-root:hover {
-  background-color: #729AB8; /* Optional: Change color on hover */
+  background-color: #729ab8; /* Optional: Change color on hover */
 }
 
 .form-control-select .MuiInputBase-root {
@@ -91,11 +108,32 @@
   color: #636363; /* Change the label text color */
 }
 
+.tabs {
+  padding-top: 5px;
+  background-color: #729ab8;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  width: 85%;
+  height: 75%;
+  margin: 10px;
+}
+
+.tabs-panel {
+  background-color: #21668d;
+}
+
 .chartcard {
-  background-color: #272E44;
+  background-color: #272e44;
   border-radius: 0.5em;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   padding: 1em;
+  height: 95%;
+}
+
+.temp-h4 {
+  color: #a8e6ff;
+  font-size: 20px;
+  font-weight: normal;
 }
 
 .temperature {
@@ -107,6 +145,16 @@
   color: #efefef;
 }
 
+.temp-text {
+  position: absolute;
+  top: 67.5%;
+  left: 18.5%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  font-weight: bold;
+  color: #a8e6ff;
+}
+
 .humidity {
   display: flex;
   flex-direction: column;
@@ -114,6 +162,16 @@
   justify-content: center;
   height: 95%;
   color: #efefef;
+}
+
+.humidity-text {
+  position: absolute;
+  top: 67.5%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  font-weight: bold;
+  color: #a8e6ff;
 }
 
 .smoke_level {
@@ -125,3 +183,12 @@
   color: #efefef;
 }
 
+.smoke-level-text {
+  position: absolute;
+  top: 67.5%;
+  left: 81.8%;
+  transform: translate(-50%, -50%);
+  font-size: 40px;
+  font-weight: bold;
+  color: #a8e6ff;
+}

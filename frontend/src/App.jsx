@@ -31,23 +31,32 @@ function App() {
         const data = response.data;
 
         // Get the most current entry
-        const latestEntry = data.reduce((max, item) =>
-          parseInt(item.id, 10) > parseInt(max.id, 10) ? item : max
-        );
+        // this function returns the item with the maximum id
+        const findMaxFunction = (max, item) => {
+          // condition ? return 1 : return 2
+          //parseInt(item.id, 10) > parseInt(max.id, 10) ? item : max
+          if (parseInt(item.id, 10) > parseInt(max.id, 10)) {
+            return item;
+          } else {
+            return max;
+          }
+        };
+        const latestEntry = data.reduce(findMaxFunction);
 
         setAxiosData(data);
-        setCurrentTemp(latestEntry?.temp || 0);
+        setCurrentTemp(latestEntry?.temp || 0); // optional chaining to check null
         setCurrentHumidity(latestEntry?.humidity || 0);
         setCurrentSmokeLevel(latestEntry?.smoke_level || 0);
 
         // Filter data for the last 30 days
+        // creating two objects from the Date class - default getDate is today
         const today = new Date();
         const thirtyDaysAgo = new Date();
         thirtyDaysAgo.setDate(today.getDate() - 30);
 
         // Date filtering for the current year
         const currentYear = today.getFullYear();
-        const startOfYear = new Date(currentYear, 0, 1); // Jan 1st of the current year
+        const startOfYear = new Date(currentYear, 0, 1); // 1st Jan of the current year - so (year, monthIndex, date)
 
         const filteredData = data.filter((item) => {
           const itemDate = new Date(item.timestamp);
@@ -198,8 +207,8 @@ function App() {
             {
               label: "Smoke Level",
               data: smokePoints,
-              borderColor: "#FFA500",
-              backgroundColor: "rgba(255, 165, 0, 0.2)",
+              borderColor: "#A9D5C0",
+              backgroundColor: "rgba(169, 213, 192, 0.2)",
               tension: 0.4,
             },
           ],
@@ -249,14 +258,36 @@ function App() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
+  const createGradient = (ctx, chartArea) => {
+    let gradient = ctx.createLinearGradient(
+      chartArea.right,
+      0,
+      chartArea.left,
+      0
+    );
+    gradient.addColorStop(0, "#A9D5C0"); // Start Color (Blue)
+    gradient.addColorStop(0.7, "#21668D"); // Keep Dark Blue for 70%
+    gradient.addColorStop(1, "#21668D"); // End Color (Green)
+    return gradient;
+  };
+
   // temperature gauge chart
   const gaugeTempData = {
     labels: ["Temperature"],
     datasets: [
       {
         data: [currentTemp, 100 - currentTemp], // out of 100
-        backgroundColor: ["#36A2EB", "#E0E0E0"],
-        borderWidth: 0,
+        backgroundColor: (ctx) => {
+          const chart = ctx.chart;
+          if (!chart.chartArea) return ["#36A2EB", "#E0E0E0"]; // Fallback colors
+
+          return [createGradient(ctx.chart.ctx, chart.chartArea), "#272E44"];
+        },
+        borderWidth: 8, // Outer border thickness
+        borderColor: "#3E5B74", // Outer ring color
+        cutout: "70%", // Makes the circle thin from inside
+        hoverBorderColor: ["#272E44", "#272E44"], // Inner border color (when hovered)
+        hoverBorderWidth: 2, // Inner border thickness
       },
     ],
   };
@@ -267,8 +298,17 @@ function App() {
     datasets: [
       {
         data: [currentHumidity, 100 - currentHumidity], // out of 100
-        backgroundColor: ["#36A2EB", "#E0E0E0"],
-        borderWidth: 0,
+        backgroundColor: (ctx) => {
+          const chart = ctx.chart;
+          if (!chart.chartArea) return ["#36A2EB", "#E0E0E0"]; // Fallback colors
+
+          return [createGradient(ctx.chart.ctx, chart.chartArea), "#272E44"];
+        },
+        borderWidth: 8, // Outer border thickness
+        borderColor: "#3E5B74", // Outer ring color
+        cutout: "70%", // Makes the circle thin from inside
+        hoverBorderColor: ["#272E44", "#272E44"], // Inner border color (when hovered)
+        hoverBorderWidth: 2, // Inner border thickness
       },
     ],
   };
@@ -279,23 +319,37 @@ function App() {
     datasets: [
       {
         data: [currentSmokeLevel, 1000 - currentSmokeLevel], // out of 1000
-        backgroundColor: ["#36A2EB", "#E0E0E0"],
-        borderWidth: 0,
+        backgroundColor: (ctx) => {
+          const chart = ctx.chart;
+          if (!chart.chartArea) return ["#36A2EB", "#E0E0E0"]; // Fallback colors
+
+          return [createGradient(ctx.chart.ctx, chart.chartArea), "#272E44"];
+        },
+        borderWidth: 8, // Outer border thickness
+        borderColor: "#3E5B74", // Outer ring color
+        cutout: "70%", // Makes the circle thin from inside
+        hoverBorderColor: ["#272E44", "#272E44"], // Inner border color (when hovered)
+        hoverBorderWidth: 2, // Inner border thickness
       },
     ],
   };
 
   // Options for any gauge chart
   const gaugeOptions = {
-    aspectRatio: 2,
-    circumference: 180,
+    aspectRatio: 1.5,
+    circumference: 360,
     rotation: -90,
     plugins: {
       tooltip: {
-        enabled: true,
+        enabled: false,
       },
       legend: {
         display: false,
+      },
+    },
+    elements: {
+      arc: {
+        borderJoinStyle: "round", // Smooth edges
       },
     },
   };
@@ -436,10 +490,18 @@ function App() {
           </div>
           <div className="tabs">
             <TabContext value={value}>
-              <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+              <Box
+                sx={{
+                  borderColor: "divider",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
+              >
                 <TabList
                   onChange={handleChange}
                   aria-label="lab API tabs example"
+                  variant="scrollable"
+                  scrollButtons="auto"
                 >
                   <Tab label="Current" value="1" />
                   <Tab label="Month" value="2" />
@@ -449,21 +511,33 @@ function App() {
             </TabContext>
           </div>
         </div>
-        <div className="tabs">
+        <div className="tabs-panel">
           <TabContext value={value}>
             <TabPanel value="1">
               <div className="graph">
-                <div className="chartcard temperature">
-                  <h3>Current Temperature: {currentTemp}°C</h3>
-                  <Doughnut data={gaugeTempData} options={gaugeOptions} />
+                <div className="chartcard">
+                  <h4 className="temp-h4">Temperature</h4>
+                  <div className="chartcard temperature">
+                    <Doughnut data={gaugeTempData} options={gaugeOptions} />
+                    <div className="temp-text">{currentTemp}°C</div>
+                  </div>
                 </div>
-                <div className="chartcard humidity">
-                  <h3>Current Humiidty: {currentHumidity}°C</h3>
-                  <Doughnut data={gaugeHumidityData} options={gaugeOptions} />
+                <div className="chartcard">
+                  <h4 className="temp-h4">Humidity</h4>
+                  <div className="chartcard humidity">
+                    <Doughnut data={gaugeHumidityData} options={gaugeOptions} />
+                    <div className="humidity-text">{currentHumidity}</div>
+                  </div>
                 </div>
-                <div className="chartcard smoke_level">
-                  <h3>Current Smoke Level: {currentSmokeLevel}°C</h3>
-                  <Doughnut data={gaugeSmokeLevelData} options={gaugeOptions} />
+                <div className="chartcard">
+                  <h4 className="temp-h4">Smoke Level</h4>
+                  <div className="chartcard smoke_level">
+                    <Doughnut
+                      data={gaugeSmokeLevelData}
+                      options={gaugeOptions}
+                    />
+                    <div className="smoke-level-text">{currentSmokeLevel}</div>
+                  </div>
                 </div>
               </div>
             </TabPanel>
