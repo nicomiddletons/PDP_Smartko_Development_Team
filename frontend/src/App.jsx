@@ -248,8 +248,8 @@ function App() {
             {
               label: "Smoke Level - Yearly",
               data: yearlySmokePoints,
-              borderColor: "#8B0000",
-              backgroundColor: "rgba(139, 0, 0, 0.2)",
+              borderColor: "#ECDBE9",
+              backgroundColor: "rgba(236, 219, 233, 1)",
               tension: 0.4,
             },
           ],
@@ -374,7 +374,7 @@ function App() {
         position: "top",
       },
       title: {
-        display: true,
+        display: false,
         text: "Temperature Entries (Last 30 Days)",
       },
     },
@@ -402,7 +402,7 @@ function App() {
         position: "top",
       },
       title: {
-        display: true,
+        display: false,
         text: "Humidity Entries (Last 30 Days)",
       },
     },
@@ -430,7 +430,7 @@ function App() {
         position: "top",
       },
       title: {
-        display: true,
+        display: false,
         text: "Smoke Level Entries (Last 30 Days)",
       },
     },
@@ -502,6 +502,18 @@ function App() {
                   aria-label="lab API tabs example"
                   variant="scrollable"
                   scrollButtons="auto"
+                  sx={{
+                    "& .MuiTab-root": {
+                      color: "#ffffff", // Default text color
+                    },
+                    "& .Mui-selected": {
+                      color: "#0F141E", // Selected tab text color
+                      fontWeight: "bold",
+                    },
+                    "& .MuiTabs-indicator": {
+                      backgroundColor: "#0F141E", // underline indicator color
+                    },
+                  }}
                 >
                   <Tab label="Current" value="1" />
                   <Tab label="Month" value="2" />
@@ -516,21 +528,21 @@ function App() {
             <TabPanel value="1">
               <div className="graph">
                 <div className="chartcard">
-                  <h4 className="temp-h4">Temperature</h4>
+                  <h4 className="chartcard-h4">Temperature</h4>
                   <div className="chartcard temperature">
                     <Doughnut data={gaugeTempData} options={gaugeOptions} />
                     <div className="temp-text">{currentTemp}°C</div>
                   </div>
                 </div>
                 <div className="chartcard">
-                  <h4 className="temp-h4">Humidity</h4>
+                  <h4 className="chartcard-h4">Humidity</h4>
                   <div className="chartcard humidity">
                     <Doughnut data={gaugeHumidityData} options={gaugeOptions} />
                     <div className="humidity-text">{currentHumidity}</div>
                   </div>
                 </div>
                 <div className="chartcard">
-                  <h4 className="temp-h4">Smoke Level</h4>
+                  <h4 className="chartcard-h4">Smoke Level</h4>
                   <div className="chartcard smoke_level">
                     <Doughnut
                       data={gaugeSmokeLevelData}
@@ -543,52 +555,69 @@ function App() {
             </TabPanel>
             <TabPanel value="2">
               <div className="graph">
-                <div className="chartcard temperature">
-                  <h2>Last 30 Days Temperature Chart</h2>
-                  {chartTempData.labels ? (
-                    <Line data={chartTempData} options={chartTempOptions} />
-                  ) : (
-                    <p>Loading chart...</p>
-                  )}
+                <div className="chartcard">
+                  <h4 className="chartcard-h4">
+                    Last 30 Days Temperature Chart
+                  </h4>
+                  <div className="chartcard temperature">
+                    {chartTempData.labels ? (
+                      <Line data={chartTempData} options={chartTempOptions} />
+                    ) : (
+                      <p>Loading chart...</p>
+                    )}
+                  </div>
                 </div>
-                <div className="chartcard humidity">
-                  <h2>Last 30 Days Humidity Chart</h2>
-                  {chartHumidityData.labels ? (
-                    <Line
-                      data={chartHumidityData}
-                      options={chartHumidityOptions}
-                    />
-                  ) : (
-                    <p>Loading chart...</p>
-                  )}
+                <div className="chartcard">
+                  <h4 className="chartcard-h4">Last 30 Days Humidity Chart</h4>
+                  <div className="chartcard humidity">
+                    {chartHumidityData.labels ? (
+                      <Line
+                        data={chartHumidityData}
+                        options={chartHumidityOptions}
+                      />
+                    ) : (
+                      <p>Loading chart...</p>
+                    )}
+                  </div>
                 </div>
-
-                <div className="chartcard smoke_level">
-                  <h2>Last 30 Days Smoke Level Chart</h2>
-                  {chartHumidityData.labels ? (
-                    <Line
-                      data={chartSmokeData}
-                      options={chartSmokeLevelOptions}
-                    />
-                  ) : (
-                    <p>Loading chart...</p>
-                  )}
+                <div className="chartcard">
+                  <h4 className="chartcard-h4">
+                    Last 30 Days Smoke Level Chart
+                  </h4>
+                  <div className="chartcard smoke_level">
+                    {chartHumidityData.labels ? (
+                      <Line
+                        data={chartSmokeData}
+                        options={chartSmokeLevelOptions}
+                      />
+                    ) : (
+                      <p>Loading chart...</p>
+                    )}
+                  </div>
                 </div>
               </div>
             </TabPanel>
             <TabPanel value="3">
               <div className="graph">
-                <div className="chartcard temperature">
-                  <h2>Temperature Trend (Current Year)</h2>
-                  <Line data={chartYearlyTempData} />
+                <div className="chartcard">
+                  <h4 className="chartcard-h4">
+                    Temperature Trend (Current Year)
+                  </h4>
+                  <div className="chartcard temperature">
+                    <Line data={chartYearlyTempData} />
+                  </div>
                 </div>
-                <div className="chartcard humidity">
-                  <h2>Humidity Trend (Yearly)</h2>
-                  <Line data={chartYearlyHumidityData} />
+                <div className="chartcard">
+                  <h4 className="chartcard-h4">Humidity Trend (Yearly)</h4>
+                  <div className="chartcard humidity">
+                    <Line data={chartYearlyHumidityData} />
+                  </div>
                 </div>
-                <div className="chartcard smoke_level">
-                  <h2>Smoke Level Trend (Yearly)</h2>
-                  <Line data={chartYearlySmokeData} />
+                <div className="chartcard">
+                  <h4 className="chartcard-h4">Smoke Level Trend (Yearly)</h4>
+                  <div className="chartcard smoke_level">
+                    <Line data={chartYearlySmokeData} />
+                  </div>
                 </div>
               </div>
             </TabPanel>
