@@ -1,6 +1,6 @@
 import "./App.css";
 import Chart, { Chart as ChartJS } from "chart.js/auto";
-import { Bar, Doughnut, Line } from "react-chartjs-2";
+import { Doughnut, Line } from "react-chartjs-2";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";

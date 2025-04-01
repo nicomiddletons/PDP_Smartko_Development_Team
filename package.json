@@ -2,6 +2,16 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.21.2",
-    "firebase": "^11.4.0"
+    "firebase": "^11.4.0",
+    "npm": "^11.2.0"
+  },
+  "devDependencies": {
+    "eslint": "^9.23.0",
+    "eslint-plugin-react": "^7.37.4",
+    "globals": "^16.0.0"
+  },
+  "scripts": {
+    "lint": "eslint . --fix",
+    "clean-build": "rm -rf frontend/dist && npm run build"
   }
 }
