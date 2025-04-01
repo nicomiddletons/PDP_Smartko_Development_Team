@@ -12,6 +12,8 @@ import switchData from "./data/test.json";
 import { useEffect, useState } from "react";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
+import Account from "./pages/Account"
+
 function App() {
   const [axiosData, setAxiosData] = useState([]);
   const [currentTemp, setCurrentTemp] = useState(0);
@@ -450,7 +452,17 @@ function App() {
     },
   };
   return (
+
     <>
+    
+    <BrowserRouter>
+      <Routes>
+        <Route path="account" element={<Account />} />
+        <Route path="app" element={<App />} />
+      </Routes>
+    </BrowserRouter>
+
+
       <div className="main">
         <div className="panel">
           <div className="katkologo">
@@ -629,3 +641,7 @@ function App() {
 }
 
 export default App;
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
