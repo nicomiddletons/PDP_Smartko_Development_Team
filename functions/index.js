@@ -34,6 +34,16 @@ app.post("/api/create", (req, res) => {
             temp: req.body.temp,
             humidity: req.body.humidity,
             smoke_level: req.body.smoke_level,
+            voltage_phase_1: req.body.voltage_phase_1,
+            voltage_phase_2: req.body.voltage_phase_2,
+            voltage_phase_3: req.body.voltage_phase_3,
+            current_phase_1: req.body.current_phase_1,
+            current_phase_2: req.body.current_phase_2,
+            current_phase_3: req.body.current_phase_3,
+            power_phase_1: req.body.power_phase_1,
+            power_phase_2: req.body.power_phase_2,
+            power_phase_3: req.body.power_phase_3,
+            total_power: req.body.total_power,
           });
 
       return res.status(200).send();
@@ -80,6 +90,16 @@ app.get("/api/read", (req, res) => {
             temp: doc.data().temp,
             humidity: doc.data().humidity,
             smoke_level: doc.data().smoke_level,
+            voltage_phase_1: doc.data().voltage_phase_1,
+            voltage_phase_2: doc.data().voltage_phase_2,
+            voltage_phase_3: doc.data().voltage_phase_3,
+            current_phase_1: doc.data().current_phase_1,
+            current_phase_2: doc.data().current_phase_2,
+            current_phase_3: doc.data().current_phase_3,
+            power_phase_1: doc.data().power_phase_1,
+            power_phase_2: doc.data().power_phase_2,
+            power_phase_3: doc.data().power_phase_3,
+            total_power: doc.data().total_power,
           };
           response.push(selectedItem);
         }
