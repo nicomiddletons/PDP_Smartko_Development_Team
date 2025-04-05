@@ -46,9 +46,9 @@ h3 {
 }
 
 .logo-img {
-  width: auto;
+  width: 40%;
   height: 150px;
-  padding-bottom: 10px;
+  padding-left: 40px;
 }
 
 .control-panel {

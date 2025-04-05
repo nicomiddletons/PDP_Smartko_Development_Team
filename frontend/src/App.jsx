@@ -454,7 +454,7 @@ function App() {
       <div className="main">
         <div className="panel">
           <div className="katkologo">
-            <img src={`./whiteLogo.svg`} alt="KatkoLogo" className="logo-img" />
+            <img src={`./smartko_logo_2.svg`} alt="KatkoLogo" className="logo-img" />
           </div>
           <div className="control-panel">
             <img src={`./controlPanel.svg`} alt="control panel" /> Control panel
