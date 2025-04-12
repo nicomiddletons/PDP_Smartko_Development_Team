@@ -14,12 +14,28 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 function App() {
   const [axiosData, setAxiosData] = useState([]);
+  //current
   const [currentTemp, setCurrentTemp] = useState(0);
   const [currentHumidity, setCurrentHumidity] = useState(0);
   const [currentSmokeLevel, setCurrentSmokeLevel] = useState(0);
+  const [currentVoltage1, setCurrentVoltage1] = useState(0);
+  const [currentVoltage2, setCurrentVoltage2] = useState(0);
+  const [currentVoltage3, setCurrentVoltage3] = useState(0);
+  const [currentCurrent1, setCurrentCurrent1] = useState(0);
+  const [currentCurrent2, setCurrentCurrent2] = useState(0);
+  const [currentCurrent3, setCurrentCurrent3] = useState(0);
+  const [currentPower1, setCurrentPower1] = useState(0);
+  const [currentPower2, setCurrentPower2] = useState(0);
+  const [currentPower3, setCurrentPower3] = useState(0);
+  const [currentTotalPower, setCurrentTotalPower] = useState(0);
+  //chart
   const [chartTempData, setChartTempData] = useState({});
   const [chartHumidityData, setChartHumidityData] = useState({});
   const [chartSmokeData, setChartSmokeData] = useState({});
+  const [chartVoltageData, setChartVoltageData] = useState({});
+  const [chartCurrentData, setChartCurrentData] = useState({});
+  const [chartPowerData, setChartPowerData] = useState({});
+  //yearly
   const [chartYearlyTempData, setChartYearlyTempData] = useState({});
   const [chartYearlyHumidityData, setChartYearlyHumidityData] = useState({});
   const [chartYearlySmokeData, setChartYearlySmokeData] = useState({});
@@ -48,6 +64,20 @@ function App() {
         setCurrentHumidity(latestEntry?.humidity || 0);
         setCurrentSmokeLevel(latestEntry?.smoke_level || 0);
 
+        setCurrentVoltage1(latestEntry?.voltage_phase_1 || 0);
+        setCurrentVoltage2(latestEntry?.voltage_phase_2 || 0);
+        setCurrentVoltage3(latestEntry?.voltage_phase_3 || 0);
+
+        setCurrentCurrent1(latestEntry?.current_phase_1 || 0);
+        setCurrentCurrent2(latestEntry?.current_phase_2 || 0);
+        setCurrentCurrent3(latestEntry?.current_phase_3 || 0);
+
+        setCurrentPower1(latestEntry?.power_phase_1 || 0);
+        setCurrentPower2(latestEntry?.power_phase_2 || 0);
+        setCurrentPower3(latestEntry?.power_phase_3 || 0);
+        setCurrentTotalPower(latestEntry?.total_power || 0);
+  
+
         // Filter data for the last 30 days
         // creating two objects from the Date class - default getDate is today
         const today = new Date();
@@ -72,6 +102,11 @@ function App() {
         const tempData = {};
         const humidityData = {};
         const smokeData = {};
+        //??
+        const voltageData = {currentVoltage1, currentVoltage2,currentVoltage3};
+        const currentData = {currentCurrent1, currentCurrent2, currentCurrent3};
+        const powerData = {currentPower1, currentPower2, currentPower3};
+
 
         const yearlyTempData = {}; // Group data by month for yearly chart
         const yearlyHumidityData = {};
@@ -214,6 +249,45 @@ function App() {
           ],
         });
 
+        setChartVoltageData({
+          labels: timestamp,
+          datasets: [
+            {
+              label: "Voltage",
+              data: voltageData,
+              borderColor: "#4CAF50",
+              backgroundColor: "rgba(76, 175, 80, 0.2)",
+              tension: 0.4,
+            },
+          ],
+        });
+
+        setChartCurrentData({
+          labels: timestamp,
+          datasets: [
+            {
+              label: "Current",
+              data: currentData,
+              borderColor: "#4CAF50",
+              backgroundColor: "rgba(76, 175, 80, 0.2)",
+              tension: 0.4,
+            },
+          ],
+        });
+
+        setChartPowerData({
+          labels: timestamp,
+          datasets: [
+            {
+              label: "Power",
+              data: powerData,
+              borderColor: "#4CAF50",
+              backgroundColor: "rgba(76, 175, 80, 0.2)",
+              tension: 0.4,
+            },
+          ],
+        });
+
         setChartYearlyTempData({
           labels: monthLabels,
           datasets: [
@@ -254,6 +328,12 @@ function App() {
             },
           ],
         });
+
+        
+
+
+
+
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
@@ -449,6 +529,93 @@ function App() {
       },
     },
   };
+
+  // Chart current voltage options
+
+  const chartVoltageOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: false,
+        text: "Voltage level phases 1-3",
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Date",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Voltage",
+        },
+      },
+    },
+  };
+
+  // Chart current Current options
+  const chartCurrentOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: false,
+        text: "Current level phases 1-3",
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Date",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Current",
+        },
+      },
+    },
+  };
+
+  // Chart current Power options
+  const chartPowerOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: false,
+        text: "Power level phases 1-3",
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Date",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Power",
+        },
+      },
+    },
+  };
+
+
   return (
     <>
       <div className="main">
@@ -551,6 +718,46 @@ function App() {
                     <div className="smoke-level-text">{currentSmokeLevel}</div>
                   </div>
                 </div>
+                <div className="chartcard">
+                  <h4 className="chartcard-h4">Voltage Level</h4>
+                  <div className="chartcard voltage_level">
+
+                    {chartVoltageData.labels ? (
+                      <Line data={voltageData} options={chartVoltageOptions} />
+                    ) : (
+                      <p>Loading chart...</p>
+                    )}
+                    <div className="voltage-level-text">{currentVoltage1}</div>
+                  </div>
+                </div>
+                <div className="chartcard">
+                  <h4 className="chartcard-h4">Current Level</h4>
+                  <div className="chartcard current_level">
+
+                    {chartCurrentData.labels ? (
+                      <Line data={currentData} options={chartCurrentOptions} />
+                    ) : (
+                      <p>Loading chart...</p>
+                    )}
+                    <div className="current-level-text">{currentCurrent1}</div>
+                  </div>
+                </div>
+                <div className="chartcard">
+                  <h4 className="chartcard-h4">Power Level</h4>
+                  <div className="chartcard power_level">
+
+                    {chartPowerData.labels ? (
+                      <Line data={powerData} options={chartPowerOptions} />
+                    ) : (
+                      <p>Loading chart...</p>
+                    )}
+                    <div className="power-level-text">{currentTotalPower}</div>
+                  </div>
+                </div>
+
+
+
+
               </div>
             </TabPanel>
             <TabPanel value="2">
