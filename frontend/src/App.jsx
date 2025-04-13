@@ -249,12 +249,14 @@ function App() {
           ],
         });
 
+        const phaseLabels = ["Phase 1", "Phase 2", "Phase 3"];
+
         setChartVoltageData({
-          labels: timestamp,
+          labels: phaseLabels,
           datasets: [
             {
               label: "Voltage",
-              data: voltageData,
+              data: [currentVoltage1, currentVoltage2, currentVoltage3],
               borderColor: "#4CAF50",
               backgroundColor: "rgba(76, 175, 80, 0.2)",
               tension: 0.4,
@@ -263,11 +265,11 @@ function App() {
         });
 
         setChartCurrentData({
-          labels: timestamp,
+          labels: phaseLabels,
           datasets: [
             {
               label: "Current",
-              data: currentData,
+              data: [currentCurrent1, currentCurrent2, currentCurrent3],
               borderColor: "#4CAF50",
               backgroundColor: "rgba(76, 175, 80, 0.2)",
               tension: 0.4,
@@ -276,11 +278,11 @@ function App() {
         });
 
         setChartPowerData({
-          labels: timestamp,
+          labels: phaseLabels,
           datasets: [
             {
               label: "Power",
-              data: powerData,
+              data: [currentPower1, currentPower2, currentPower3],
               borderColor: "#4CAF50",
               backgroundColor: "rgba(76, 175, 80, 0.2)",
               tension: 0.4,
@@ -723,7 +725,7 @@ function App() {
                   <div className="chartcard voltage_level">
 
                     {chartVoltageData.labels ? (
-                      <Line data={voltageData} options={chartVoltageOptions} />
+                      <Line data={chartVoltageData} options={chartVoltageOptions} />
                     ) : (
                       <p>Loading chart...</p>
                     )}
@@ -735,7 +737,7 @@ function App() {
                   <div className="chartcard current_level">
 
                     {chartCurrentData.labels ? (
-                      <Line data={currentData} options={chartCurrentOptions} />
+                      <Line data={chartCurrentData} options={chartCurrentOptions} />
                     ) : (
                       <p>Loading chart...</p>
                     )}
@@ -747,7 +749,7 @@ function App() {
                   <div className="chartcard power_level">
 
                     {chartPowerData.labels ? (
-                      <Line data={powerData} options={chartPowerOptions} />
+                      <Line data={chartPowerData} options={chartPowerOptions} />
                     ) : (
                       <p>Loading chart...</p>
                     )}
