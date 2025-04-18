@@ -695,71 +695,56 @@ function App() {
         <div className="tabs-panel">
           <TabContext value={value}>
             <TabPanel value="1">
-              <div className="graph">
+              <div className="graph numbers-grid">
+                {/*Temp */}
                 <div className="chartcard">
                   <h4 className="chartcard-h4">Temperature</h4>
-                  <div className="chartcard temperature">
-                    <Doughnut data={gaugeTempData} options={gaugeOptions} />
-                    <div className="temp-text">{currentTemp}°C</div>
+                  <div className="number-display" style={{ marginTop: '1rem'}}>
+                    {currentTemp}°C
                   </div>
                 </div>
+                {/* Humidity */}
                 <div className="chartcard">
-                  <h4 className="chartcard-h4">Humidity</h4>
-                  <div className="chartcard humidity">
-                    <Doughnut data={gaugeHumidityData} options={gaugeOptions} />
-                    <div className="humidity-text">{currentHumidity}</div>
-                  </div>
+                <h4 className="chartcard-h4">Humidity</h4>
+                <div className="number-display" style={{ marginTop: '1rem' }}>
+                  {currentHumidity}%
                 </div>
+              </div>
+                {/* Smoke Level */}
                 <div className="chartcard">
-                  <h4 className="chartcard-h4">Smoke Level</h4>
-                  <div className="chartcard smoke_level">
-                    <Doughnut
-                      data={gaugeSmokeLevelData}
-                      options={gaugeOptions}
-                    />
-                    <div className="smoke-level-text">{currentSmokeLevel}</div>
-                  </div>
+                <h4 className="chartcard-h4">Smoke Level</h4>
+                <div className="number-display" style={{ marginTop: '1rem' }}>
+                  {currentSmokeLevel}
                 </div>
+              </div>
+                {/* Voltage Phases */}
                 <div className="chartcard">
-                  <h4 className="chartcard-h4">Voltage Level</h4>
-                  <div className="chartcard voltage_level">
-
-                    {chartVoltageData.labels ? (
-                      <Line data={chartVoltageData} options={chartVoltageOptions} />
-                    ) : (
-                      <p>Loading chart...</p>
-                    )}
-                    <div className="voltage-level-text">{currentVoltage1}</div>
+                  <h4 className="chartcard-h4">Voltage (V)</h4>
+                  <div className="phase-grid">
+                    <div className="number-display">Phase 1: {currentVoltage1} V</div>
+                    <div className="number-display">Phase 2: {currentVoltage2} V</div>
+                    <div className="number-display">Phase 3: {currentVoltage3} V</div>
                   </div>
                 </div>
+                {/* Current Phases */}
                 <div className="chartcard">
-                  <h4 className="chartcard-h4">Current Level</h4>
-                  <div className="chartcard current_level">
-
-                    {chartCurrentData.labels ? (
-                      <Line data={chartCurrentData} options={chartCurrentOptions} />
-                    ) : (
-                      <p>Loading chart...</p>
-                    )}
-                    <div className="current-level-text">{currentCurrent1}</div>
+                  <h4 className="chartcard-h4">Current (A)</h4>
+                  <div className="phase-grid">
+                    <div className="number-display">Phase 1: {currentCurrent1} A</div>
+                    <div className="number-display">Phase 2: {currentCurrent2} A</div>
+                    <div className="number-display">Phase 3: {currentCurrent3} A</div>
                   </div>
                 </div>
+                {/* Power Phases & Total Power */}
                 <div className="chartcard">
-                  <h4 className="chartcard-h4">Power Level</h4>
-                  <div className="chartcard power_level">
-
-                    {chartPowerData.labels ? (
-                      <Line data={chartPowerData} options={chartPowerOptions} />
-                    ) : (
-                      <p>Loading chart...</p>
-                    )}
-                    <div className="power-level-text">{currentTotalPower}</div>
+                  <h4 className="chartcard-h4">Power (W)</h4>
+                  <div className="phase-grid">
+                    <div className="number-display">Phase 1: {currentPower1} W</div>
+                    <div className="number-display">Phase 2: {currentPower2} W</div>
+                    <div className="number-display">Phase 3: {currentPower3} W</div>
+                    <div className="number-display"><strong>Total Power:</strong> {currentTotalPower} W</div>
                   </div>
                 </div>
-
-
-
-
               </div>
             </TabPanel>
             <TabPanel value="2">
