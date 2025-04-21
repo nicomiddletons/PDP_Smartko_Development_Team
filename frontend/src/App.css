@@ -121,13 +121,14 @@ h3 {
 
 .tabs-panel {
   background-color: #21668d;
+  height: 100vh;
 }
 
 .chartcard {
   background-color: #272e44;
   border-radius: 0.5em;
   padding: 1em;
-  height: 95%;
+  height: 100%;
 }
 
 .chartcard-h4 {
@@ -142,7 +143,7 @@ h3 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 95%;
+  height: 90%;
   color: #efefef;
 }
 
@@ -161,7 +162,7 @@ h3 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 95%;
+  height: 90%;
   color: #efefef;
 }
 
@@ -180,7 +181,7 @@ h3 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 95%;
+  height: 90%;
   color: #efefef;
 }
 
