@@ -626,7 +626,10 @@ function App() {
             <img src={`./smartko_logo_2.svg`} alt="KatkoLogo" className="logo-img" />
           </div>
           <div className="control-panel">
-            <img src={`./controlPanel.svg`} alt="control panel" /> Control panel
+            <img src={`./ControlPanelIcon.svg`} alt="control panel" /> Control panel
+          </div>
+          <div className="floor-plan">
+            <img src={`./FloorPlanIcon.svg`} alt="floor plan" /> Floor Plan
           </div>
           <div className="account">
             <img src={`./account.svg`} alt="control panel" /> Account
@@ -636,27 +639,7 @@ function App() {
           <div className="current-page">
             <h1>Control Panel</h1>
           </div>
-          <div className="select-switch">
-            <FormControl variant="filled" className="form-control-select">
-              <InputLabel id="switch-selection-label">
-                Switch Selection
-              </InputLabel>
-              <Select
-                labelId="switch-selection-label"
-                value={switchSelection}
-                onChange={handleSwitchSelection}
-                sx={{
-                  ":before": { borderBottomColor: "#21668D" },
-                  ":after": { borderBottomColor: "#21668D" },
-                }}
-              >
-                <MenuItem value={1}>Katko - KEA 225 A2</MenuItem>
-                <MenuItem value={2}>Katko - KEA 225 A2</MenuItem>
-                <MenuItem value={3}>Katko - KEA 225 A2</MenuItem>
-                <MenuItem value={4}>Katko - KEA 225 A2</MenuItem>
-              </Select>
-            </FormControl>
-          </div>
+          <div className="empty"></div>
           <div className="tabs">
             <TabContext value={value}>
               <Box

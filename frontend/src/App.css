@@ -110,6 +110,7 @@ h3 {
 
 .tabs {
   padding-top: 5px;
+  float: right;
   background-color: #729ab8;
   border-radius: 20px;
   display: flex;
@@ -132,8 +133,8 @@ h3 {
 
 .chartcard-h4 {
   color: #a8e6ff;
-  font-size: 20px;
-  font-weight: normal;
+  font-size: 23px;
+  font-weight: bold;
   margin-bottom: 0.75rem;
 }
 
@@ -205,7 +206,7 @@ h3 {
   background-color: #44829A;
   color: white;
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: normal;
   text-align: center;
   padding: 1rem;
   border-radius: 8px;
