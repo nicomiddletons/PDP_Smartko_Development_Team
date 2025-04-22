@@ -33,7 +33,7 @@ h3 {
 
 .panel {
   display: grid;
-  grid-template-columns: 3fr 1fr 1fr;
+  grid-template-columns: 3fr 1fr 1fr 1fr;
   padding: 10px;
   background-color: #0f141e;
   width: auto;
@@ -52,6 +52,16 @@ h3 {
 }
 
 .control-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: auto;
+  height: 150px;
+  color: #efefef;
+}
+
+.floor-plan {
   display: flex;
   flex-direction: column;
   align-items: center;
