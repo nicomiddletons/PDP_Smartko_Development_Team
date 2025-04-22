@@ -32,9 +32,12 @@ function App() {
   const [chartTempData, setChartTempData] = useState({});
   const [chartHumidityData, setChartHumidityData] = useState({});
   const [chartSmokeData, setChartSmokeData] = useState({});
-  const [chartVoltageData, setChartVoltageData] = useState({});
-  const [chartCurrentData, setChartCurrentData] = useState({});
-  const [chartPowerData, setChartPowerData] = useState({});
+  const [chartVoltage1Data, setChartVoltage1Data] = useState({});
+  const [chartVoltage2Data, setChartVoltage2Data] = useState({});
+  const [chartVoltage3Data, setChartVoltage3Data] = useState({});
+  // const [chartCurrentData, setCurrentSmokeData] = useState({});
+  // const [chartPowerData, setChartPowerData] = useState({});
+
   //yearly
   const [chartYearlyTempData, setChartYearlyTempData] = useState({});
   const [chartYearlyHumidityData, setChartYearlyHumidityData] = useState({});
@@ -76,7 +79,6 @@ function App() {
         setCurrentPower2(latestEntry?.power_phase_2 || 0);
         setCurrentPower3(latestEntry?.power_phase_3 || 0);
         setCurrentTotalPower(latestEntry?.total_power || 0);
-  
 
         // Filter data for the last 30 days
         // creating two objects from the Date class - default getDate is today
@@ -102,11 +104,9 @@ function App() {
         const tempData = {};
         const humidityData = {};
         const smokeData = {};
-        //??
-        const voltageData = {currentVoltage1, currentVoltage2,currentVoltage3};
-        const currentData = {currentCurrent1, currentCurrent2, currentCurrent3};
-        const powerData = {currentPower1, currentPower2, currentPower3};
-
+        const voltageData1 = {};
+        const voltageData2 = {};
+        const voltageData3 = {};
 
         const yearlyTempData = {}; // Group data by month for yearly chart
         const yearlyHumidityData = {};
@@ -125,6 +125,18 @@ function App() {
           // Store smoke level data
           if (!smokeData[dateKey]) smokeData[dateKey] = [];
           smokeData[dateKey].push(item.smoke_level);
+
+          // Store Voltage one
+          if (!voltageData1[dateKey]) voltageData1[dateKey] = [];
+          voltageData1[dateKey].push(item.voltage_phase_1);
+
+          // Store Voltage two
+          if (!voltageData2[dateKey]) voltageData2[dateKey] = [];
+          voltageData2[dateKey].push(item.voltage_phase_2);
+
+          // Store Voltage three
+          if (!voltageData3[dateKey]) voltageData3[dateKey] = [];
+          voltageData3[dateKey].push(item.voltage_phase_3);
         });
 
         // Group yearly data by month
@@ -167,6 +179,30 @@ function App() {
         const smokePoints = labels.map((date) => {
           const smokes = smokeData[date];
           return smokes.reduce((sum, smoke) => sum + smoke, 0) / smokes.length; // Avg smoke level
+        });
+
+        const voltagePoints1 = labels.map((date) => {
+          const voltages1 = voltageData1[date];
+          return (
+            voltages1.reduce((sum, voltage1) => sum + voltage1, 0) /
+            voltages1.length
+          ); // Avg voltage phase 1 level
+        });
+
+        const voltagePoints2 = labels.map((date) => {
+          const voltages2 = voltageData1[date];
+          return (
+            voltages2.reduce((sum, voltage2) => sum + voltage2, 0) /
+            voltages2.length
+          ); // Avg voltage phase 2 level
+        });
+
+        const voltagePoints3 = labels.map((date) => {
+          const voltages3 = voltageData1[date];
+          return (
+            voltages3.reduce((sum, voltage3) => sum + voltage3, 0) /
+            voltages3.length
+          ); // Avg voltage phase 3 level
         });
 
         // Format data for yearly temperature trend (average per month)
@@ -249,42 +285,43 @@ function App() {
           ],
         });
 
-        const phaseLabels = ["Phase 1", "Phase 2", "Phase 3"];
-
-        setChartVoltageData({
-          labels: phaseLabels,
+        // Update voltage phase 1 level
+        setChartVoltage1Data({
+          labels,
           datasets: [
             {
-              label: "Voltage",
-              data: [currentVoltage1, currentVoltage2, currentVoltage3],
-              borderColor: "#4CAF50",
-              backgroundColor: "rgba(76, 175, 80, 0.2)",
+              label: "Voltage Phase 1",
+              data: voltagePoints1,
+              borderColor: "#A9D5C0",
+              backgroundColor: "rgba(169, 213, 192, 0.2)",
               tension: 0.4,
             },
           ],
         });
 
-        setChartCurrentData({
-          labels: phaseLabels,
+        // Update voltage phase 2 level
+        setChartVoltage2Data({
+          labels,
           datasets: [
             {
-              label: "Current",
-              data: [currentCurrent1, currentCurrent2, currentCurrent3],
-              borderColor: "#4CAF50",
-              backgroundColor: "rgba(76, 175, 80, 0.2)",
+              label: "Voltage Phase 2",
+              data: voltagePoints2,
+              borderColor: "#A9D5C0",
+              backgroundColor: "rgba(169, 213, 192, 0.2)",
               tension: 0.4,
             },
           ],
         });
 
-        setChartPowerData({
-          labels: phaseLabels,
+        // Update voltage phase 3 level
+        setChartVoltage3Data({
+          labels,
           datasets: [
             {
-              label: "Power",
-              data: [currentPower1, currentPower2, currentPower3],
-              borderColor: "#4CAF50",
-              backgroundColor: "rgba(76, 175, 80, 0.2)",
+              label: "Voltage Phase 3",
+              data: voltagePoints3,
+              borderColor: "#A9D5C0",
+              backgroundColor: "rgba(169, 213, 192, 0.2)",
               tension: 0.4,
             },
           ],
@@ -330,12 +367,6 @@ function App() {
             },
           ],
         });
-
-        
-
-
-
-
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
@@ -532,9 +563,8 @@ function App() {
     },
   };
 
-  // Chart current voltage options
-
-  const chartVoltageOptions = {
+  // Chart month voltage phase 1 level options
+  const chartVoltage1LevelOptions = {
     responsive: true,
     plugins: {
       legend: {
@@ -542,7 +572,7 @@ function App() {
       },
       title: {
         display: false,
-        text: "Voltage level phases 1-3",
+        text: "Voltage Phase 1 Level Entries (Last 30 Days)",
       },
     },
     scales: {
@@ -555,14 +585,14 @@ function App() {
       y: {
         title: {
           display: true,
-          text: "Voltage",
+          text: "Voltage Phase 1",
         },
       },
     },
   };
 
-  // Chart current Current options
-  const chartCurrentOptions = {
+  // Chart month voltage phase 2 level options
+  const chartVoltage2LevelOptions = {
     responsive: true,
     plugins: {
       legend: {
@@ -570,7 +600,7 @@ function App() {
       },
       title: {
         display: false,
-        text: "Current level phases 1-3",
+        text: "Voltage Phase 2 Level Entries (Last 30 Days)",
       },
     },
     scales: {
@@ -583,14 +613,14 @@ function App() {
       y: {
         title: {
           display: true,
-          text: "Current",
+          text: "Voltage Phase 2",
         },
       },
     },
   };
 
-  // Chart current Power options
-  const chartPowerOptions = {
+  // Chart month voltage phase 3 level options
+  const chartVoltage3LevelOptions = {
     responsive: true,
     plugins: {
       legend: {
@@ -598,7 +628,7 @@ function App() {
       },
       title: {
         display: false,
-        text: "Power level phases 1-3",
+        text: "Voltage Phase 3 Level Entries (Last 30 Days)",
       },
     },
     scales: {
@@ -611,19 +641,22 @@ function App() {
       y: {
         title: {
           display: true,
-          text: "Power",
+          text: "Voltage Phase 3",
         },
       },
     },
   };
-
 
   return (
     <>
       <div className="main">
         <div className="panel">
           <div className="katkologo">
-            <img src={`./smartko_logo_2.svg`} alt="KatkoLogo" className="logo-img" />
+            <img
+              src={`./smartko_logo_2.svg`}
+              alt="KatkoLogo"
+              className="logo-img"
+            />
           </div>
           <div className="control-panel">
             <img src={`./controlPanel.svg`} alt="control panel" /> Control panel
@@ -699,50 +732,70 @@ function App() {
                 {/*Temp */}
                 <div className="chartcard">
                   <h4 className="chartcard-h4">Temperature</h4>
-                  <div className="number-display" style={{ marginTop: '1rem'}}>
+                  <div className="number-display" style={{ marginTop: "1rem" }}>
                     {currentTemp}°C
                   </div>
                 </div>
                 {/* Humidity */}
                 <div className="chartcard">
-                <h4 className="chartcard-h4">Humidity</h4>
-                <div className="number-display" style={{ marginTop: '1rem' }}>
-                  {currentHumidity}%
+                  <h4 className="chartcard-h4">Humidity</h4>
+                  <div className="number-display" style={{ marginTop: "1rem" }}>
+                    {currentHumidity}%
+                  </div>
                 </div>
-              </div>
                 {/* Smoke Level */}
                 <div className="chartcard">
-                <h4 className="chartcard-h4">Smoke Level</h4>
-                <div className="number-display" style={{ marginTop: '1rem' }}>
-                  {currentSmokeLevel}
+                  <h4 className="chartcard-h4">Smoke Level</h4>
+                  <div className="number-display" style={{ marginTop: "1rem" }}>
+                    {currentSmokeLevel}
+                  </div>
                 </div>
-              </div>
                 {/* Voltage Phases */}
                 <div className="chartcard">
                   <h4 className="chartcard-h4">Voltage (V)</h4>
                   <div className="phase-grid">
-                    <div className="number-display">Phase 1: {currentVoltage1} V</div>
-                    <div className="number-display">Phase 2: {currentVoltage2} V</div>
-                    <div className="number-display">Phase 3: {currentVoltage3} V</div>
+                    <div className="number-display">
+                      Phase 1: {currentVoltage1}V
+                    </div>
+                    <div className="number-display">
+                      Phase 2: {currentVoltage2}V
+                    </div>
+                    <div className="number-display">
+                      Phase 3: {currentVoltage3}V
+                    </div>
                   </div>
                 </div>
                 {/* Current Phases */}
                 <div className="chartcard">
                   <h4 className="chartcard-h4">Current (A)</h4>
                   <div className="phase-grid">
-                    <div className="number-display">Phase 1: {currentCurrent1} A</div>
-                    <div className="number-display">Phase 2: {currentCurrent2} A</div>
-                    <div className="number-display">Phase 3: {currentCurrent3} A</div>
+                    <div className="number-display">
+                      Phase 1: {currentCurrent1}A
+                    </div>
+                    <div className="number-display">
+                      Phase 2: {currentCurrent2}A
+                    </div>
+                    <div className="number-display">
+                      Phase 3: {currentCurrent3}A
+                    </div>
                   </div>
                 </div>
                 {/* Power Phases & Total Power */}
                 <div className="chartcard">
                   <h4 className="chartcard-h4">Power (W)</h4>
                   <div className="phase-grid">
-                    <div className="number-display">Phase 1: {currentPower1} W</div>
-                    <div className="number-display">Phase 2: {currentPower2} W</div>
-                    <div className="number-display">Phase 3: {currentPower3} W</div>
-                    <div className="number-display"><strong>Total Power:</strong> {currentTotalPower} W</div>
+                    <div className="number-display">
+                      Phase 1: {currentPower1}W
+                    </div>
+                    <div className="number-display">
+                      Phase 2: {currentPower2}W
+                    </div>
+                    <div className="number-display">
+                      Phase 3: {currentPower3}W
+                    </div>
+                    <div className="number-display">
+                      <strong>Total Power:</strong> {currentTotalPower}W
+                    </div>
                   </div>
                 </div>
               </div>
@@ -783,6 +836,51 @@ function App() {
                       <Line
                         data={chartSmokeData}
                         options={chartSmokeLevelOptions}
+                      />
+                    ) : (
+                      <p>Loading chart...</p>
+                    )}
+                  </div>
+                </div>
+                <div className="chartcard">
+                  <h4 className="chartcard-h4">
+                    Last 30 Days Voltage Phase 1 Level Chart
+                  </h4>
+                  <div className="chartcard voltagePhase">
+                    {chartVoltage1Data.labels ? (
+                      <Line
+                        data={chartVoltage1Data}
+                        options={chartVoltage1LevelOptions}
+                      />
+                    ) : (
+                      <p>Loading chart...</p>
+                    )}
+                  </div>
+                </div>
+                <div className="chartcard">
+                  <h4 className="chartcard-h4">
+                    Last 30 Days Voltage Phase 2 Level Chart
+                  </h4>
+                  <div className="chartcard voltagePhase">
+                    {chartVoltage2Data.labels ? (
+                      <Line
+                        data={chartVoltage2Data}
+                        options={chartVoltage2LevelOptions}
+                      />
+                    ) : (
+                      <p>Loading chart...</p>
+                    )}
+                  </div>
+                </div>
+                <div className="chartcard">
+                  <h4 className="chartcard-h4">
+                    Last 30 Days Voltage Phase 3 Level Chart
+                  </h4>
+                  <div className="chartcard voltagePhase">
+                    {chartVoltage3Data.labels ? (
+                      <Line
+                        data={chartVoltage3Data}
+                        options={chartVoltage3LevelOptions}
                       />
                     ) : (
                       <p>Loading chart...</p>

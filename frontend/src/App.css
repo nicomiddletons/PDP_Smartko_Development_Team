@@ -235,3 +235,13 @@ h3 {
   width: 100%; 
   margin-top: 0;
 }
+
+.voltagePhase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+  color: #efefef;
+}
+
