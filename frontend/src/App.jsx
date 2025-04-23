@@ -349,22 +349,22 @@ function App() {
             {
               label: "Voltage Phase 1",
               data: voltagePoints1,
-              borderColor: "#A9D5C0",
-              backgroundColor: "rgba(169, 213, 192, 0.2)",
+              borderColor: "#e2ea10e3",
+              backgroundColor: "rgba(226, 234, 16, 0.89)",
               tension: 0.4,
             },
             {
               label: "Voltage Phase 2",
               data: voltagePoints2,
-              borderColor: "#A9D5C0",
-              backgroundColor: "rgba(169, 213, 192, 0.2)",
+              borderColor: "#0f70f8f2",
+              backgroundColor: "rgba(15, 112, 248, 0.95)",
               tension: 0.4,
             },
             {
               label: "Voltage Phase 3",
               data: voltagePoints3,
-              borderColor: "#A9D5C0",
-              backgroundColor: "rgba(169, 213, 192, 0.2)",
+              borderColor: "#8202f9",
+              backgroundColor: "rgb(130, 2, 249)",
               tension: 0.4,
             },
           ],
@@ -378,7 +378,7 @@ function App() {
               label: "Voltage Phase 2",
               data: voltagePoints2,
               borderColor: "#A9D5C0",
-              backgroundColor: "rgba(169, 213, 192, 0.2)",
+              backgroundColor: "rgb(247, 85, 4)",
               tension: 0.4,
             },
           ],
@@ -405,22 +405,22 @@ function App() {
             {
               label: "Current Phase 1",
               data: currentPoints1,
-              borderColor: "#A9D5C0",
-              backgroundColor: "rgba(169, 213, 192, 0.2)",
+              borderColor: "#f755",
+              backgroundColor: "rgb(247, 85, 4)",
               tension: 0.4,
             },
             {
               label: "Current Phase 2",
               data: currentPoints2,
-              borderColor: "#A9D5C0",
-              backgroundColor: "rgba(188, 164, 56, 0.2)",
+              borderColor: "#02d7fc",
+              backgroundColor: "rgb(2, 215, 252)",
               tension: 0.4,
             },
             {
               label: "Current Phase 3",
               data: currentPoints3,
-              borderColor: "#A9D5C0",
-              backgroundColor: "rgba(25, 20, 160, 0.2)",
+              borderColor: "#fb12b1f0",
+              backgroundColor: "rgba(251, 18, 177, 0.94)",
               tension: 0.4,
             },
           ],
@@ -461,8 +461,8 @@ function App() {
             {
               label: "Total Power",
               data: totalPowerPoints,
-              borderColor: "#A9D5C0",
-              backgroundColor: "rgba(169, 213, 192, 0.2)",
+              borderColor: "#f5cd3c",
+              backgroundColor: "rgb(245, 205, 60)",
               tension: 0.4,
             },
           ],
@@ -713,7 +713,7 @@ function App() {
       },
       title: {
         display: false,
-        text: "Voltage Phase 1 Level Entries (Last 30 Days)",
+        text: "Voltage Phase 1 2 3 Level Entries (Last 30 Days)",
       },
     },
     scales: {
@@ -726,7 +726,7 @@ function App() {
       y: {
         title: {
           display: true,
-          text: "Voltage Phase 1",
+          text: "Voltage Phase 1 2 3",
         },
       },
     },
@@ -797,7 +797,7 @@ function App() {
       },
       title: {
         display: false,
-        text: "Current Phase 1 Level Entries (Last 30 Days)",
+        text: "Current Phase 1, 2, 3 Level Entries (Last 30 Days)",
       },
     },
     scales: {
@@ -810,7 +810,7 @@ function App() {
       y: {
         title: {
           display: true,
-          text: "Current Phase 1",
+          text: "Current Phase 1 2 3",
         },
       },
     },
@@ -1081,7 +1081,7 @@ function App() {
                 </div>
                 <div className="chartcard">
                   <h4 className="chartcard-h4">
-                    Last 30 Days Voltage Phase 1 Level Chart
+                    Last 30 Days Voltage Phase 1, 2, 3 Level Chart
                   </h4>
                   <div className="chartcard voltagePhase">
                     {chartVoltage1Data.labels ? (
@@ -1096,73 +1096,13 @@ function App() {
                 </div>
                 <div className="chartcard">
                   <h4 className="chartcard-h4">
-                    Last 30 Days Voltage Phase 2 Level Chart
-                  </h4>
-                  <div className="chartcard voltagePhase">
-                    {chartVoltage2Data.labels ? (
-                      <Line
-                        data={chartVoltage2Data}
-                        options={chartVoltage2LevelOptions}
-                      />
-                    ) : (
-                      <p>Loading chart...</p>
-                    )}
-                  </div>
-                </div>
-                <div className="chartcard">
-                  <h4 className="chartcard-h4">
-                    Last 30 Days Voltage Phase 3 Level Chart
-                  </h4>
-                  <div className="chartcard voltagePhase">
-                    {chartVoltage3Data.labels ? (
-                      <Line
-                        data={chartVoltage3Data}
-                        options={chartVoltage3LevelOptions}
-                      />
-                    ) : (
-                      <p>Loading chart...</p>
-                    )}
-                  </div>
-                </div>
-                <div className="chartcard">
-                  <h4 className="chartcard-h4">
-                    Last 30 Days Current Phase 1 Level Chart
+                    Last 30 Days Current Phase 1, 2, 3 Level Chart
                   </h4>
                   <div className="chartcard currentPhase">
                     {chartCurrent1Data.labels ? (
                       <Line
                         data={chartCurrent1Data}
                         options={chartCurrent1LevelOptions}
-                      />
-                    ) : (
-                      <p>Loading chart...</p>
-                    )}
-                  </div>
-                </div>
-                <div className="chartcard">
-                  <h4 className="chartcard-h4">
-                    Last 30 Days Current Phase 2 Level Chart
-                  </h4>
-                  <div className="chartcard currentPhase">
-                    {chartCurrent2Data.labels ? (
-                      <Line
-                        data={chartCurrent2Data}
-                        options={chartCurrent2LevelOptions}
-                      />
-                    ) : (
-                      <p>Loading chart...</p>
-                    )}
-                  </div>
-                </div>
-                <div className="chartcard">
-                  <h4 className="chartcard-h4">
-                    Last 30 Days Current Phase 3 Level Chart
-                  </h4>
-                  <div className="chartcard currentPhase">
-                    {chartCurrent3Data.labels ? (
-                      <Line
-                        data={chartCurrent3Data}
-                        options={chartCurrent3LevelOptions}
                       />
                     ) : (
                       <p>Loading chart...</p>
