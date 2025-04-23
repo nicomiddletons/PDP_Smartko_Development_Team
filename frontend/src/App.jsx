@@ -35,6 +35,10 @@ function App() {
   const [chartVoltage1Data, setChartVoltage1Data] = useState({});
   const [chartVoltage2Data, setChartVoltage2Data] = useState({});
   const [chartVoltage3Data, setChartVoltage3Data] = useState({});
+  const [chartCurrent1Data, setChartCurrent1Data] = useState({});
+  const [chartCurrent2Data, setChartCurrent2Data] = useState({});
+  const [chartCurrent3Data, setChartCurrent3Data] = useState({});
+  const [chartTotalPowerData, setChartTotalPowerData] = useState({});
   // const [chartCurrentData, setCurrentSmokeData] = useState({});
   // const [chartPowerData, setChartPowerData] = useState({});
 
@@ -107,6 +111,10 @@ function App() {
         const voltageData1 = {};
         const voltageData2 = {};
         const voltageData3 = {};
+        const currentData1 = {};
+        const currentData2 = {};
+        const currentData3 = {};
+        const totalPowerData = {};
 
         const yearlyTempData = {}; // Group data by month for yearly chart
         const yearlyHumidityData = {};
@@ -137,6 +145,22 @@ function App() {
           // Store Voltage three
           if (!voltageData3[dateKey]) voltageData3[dateKey] = [];
           voltageData3[dateKey].push(item.voltage_phase_3);
+
+          // Store Current one
+          if (!currentData1[dateKey]) currentData1[dateKey] = [];
+          currentData1[dateKey].push(item.current_phase_1);
+
+          // Store Current two
+          if (!currentData2[dateKey]) currentData2[dateKey] = [];
+          currentData2[dateKey].push(item.current_phase_2);
+
+          // Store Current three
+          if (!currentData3[dateKey]) currentData3[dateKey] = [];
+          currentData3[dateKey].push(item.current_phase_3);
+
+          // Store Total Power three
+          if (!totalPowerData[dateKey]) totalPowerData[dateKey] = [];
+          totalPowerData[dateKey].push(item.total_power);
         });
 
         // Group yearly data by month
@@ -165,6 +189,7 @@ function App() {
           yearlySmokeData[monthIndex].push(item.smoke_level);
         });
 
+        // Monthly
         const labels = Object.keys(tempData).sort(); // Dates for x-axis
         const tempPoints = labels.map((date) => {
           const temps = tempData[date];
@@ -190,7 +215,7 @@ function App() {
         });
 
         const voltagePoints2 = labels.map((date) => {
-          const voltages2 = voltageData1[date];
+          const voltages2 = voltageData2[date];
           return (
             voltages2.reduce((sum, voltage2) => sum + voltage2, 0) /
             voltages2.length
@@ -198,10 +223,42 @@ function App() {
         });
 
         const voltagePoints3 = labels.map((date) => {
-          const voltages3 = voltageData1[date];
+          const voltages3 = voltageData3[date];
           return (
             voltages3.reduce((sum, voltage3) => sum + voltage3, 0) /
             voltages3.length
+          ); // Avg voltage phase 3 level
+        });
+
+        const currentPoints1 = labels.map((date) => {
+          const currents1 = currentData1[date];
+          return (
+            currents1.reduce((sum, current1) => sum + current1, 0) /
+            currents1.length
+          ); // Avg voltage phase 1 level
+        });
+
+        const currentPoints2 = labels.map((date) => {
+          const currents2 = currentData2[date];
+          return (
+            currents2.reduce((sum, current2) => sum + current2, 0) /
+            currents2.length
+          ); // Avg voltage phase 2 level
+        });
+
+        const currentPoints3 = labels.map((date) => {
+          const currents3 = currentData3[date];
+          return (
+            currents3.reduce((sum, current3) => sum + current3, 0) /
+            currents3.length
+          ); // Avg voltage phase 3 level
+        });
+
+        const totalPowerPoints = labels.map((date) => {
+          const totalpowers = totalPowerData[date];
+          return (
+            totalpowers.reduce((sum, totalpower) => sum + totalpower, 0) /
+            totalpowers.length
           ); // Avg voltage phase 3 level
         });
 
@@ -296,6 +353,20 @@ function App() {
               backgroundColor: "rgba(169, 213, 192, 0.2)",
               tension: 0.4,
             },
+            {
+              label: "Voltage Phase 2",
+              data: voltagePoints2,
+              borderColor: "#A9D5C0",
+              backgroundColor: "rgba(169, 213, 192, 0.2)",
+              tension: 0.4,
+            },
+            {
+              label: "Voltage Phase 3",
+              data: voltagePoints3,
+              borderColor: "#A9D5C0",
+              backgroundColor: "rgba(169, 213, 192, 0.2)",
+              tension: 0.4,
+            },
           ],
         });
 
@@ -320,6 +391,76 @@ function App() {
             {
               label: "Voltage Phase 3",
               data: voltagePoints3,
+              borderColor: "#A9D5C0",
+              backgroundColor: "rgba(169, 213, 192, 0.2)",
+              tension: 0.4,
+            },
+          ],
+        });
+
+        // Update current phase 1 level
+        setChartCurrent1Data({
+          labels,
+          datasets: [
+            {
+              label: "Current Phase 1",
+              data: currentPoints1,
+              borderColor: "#A9D5C0",
+              backgroundColor: "rgba(169, 213, 192, 0.2)",
+              tension: 0.4,
+            },
+            {
+              label: "Current Phase 2",
+              data: currentPoints2,
+              borderColor: "#A9D5C0",
+              backgroundColor: "rgba(188, 164, 56, 0.2)",
+              tension: 0.4,
+            },
+            {
+              label: "Current Phase 3",
+              data: currentPoints3,
+              borderColor: "#A9D5C0",
+              backgroundColor: "rgba(25, 20, 160, 0.2)",
+              tension: 0.4,
+            },
+          ],
+        });
+
+        // Update current phase 2 level
+        setChartCurrent2Data({
+          labels,
+          datasets: [
+            {
+              label: "Current Phase 2",
+              data: currentPoints2,
+              borderColor: "#A9D5C0",
+              backgroundColor: "rgba(169, 213, 192, 0.2)",
+              tension: 0.4,
+            },
+          ],
+        });
+
+        // Update current phase 3 level
+        setChartCurrent3Data({
+          labels,
+          datasets: [
+            {
+              label: "Current Phase 3",
+              data: currentPoints3,
+              borderColor: "#A9D5C0",
+              backgroundColor: "rgba(169, 213, 192, 0.2)",
+              tension: 0.4,
+            },
+          ],
+        });
+
+        // Update total power level
+        setChartTotalPowerData({
+          labels,
+          datasets: [
+            {
+              label: "Total Power",
+              data: totalPowerPoints,
               borderColor: "#A9D5C0",
               backgroundColor: "rgba(169, 213, 192, 0.2)",
               tension: 0.4,
@@ -564,7 +705,7 @@ function App() {
   };
 
   // Chart month voltage phase 1 level options
-  const chartVoltage1LevelOptions = {
+  const chartVoltageOneLevelOptions = {
     responsive: true,
     plugins: {
       legend: {
@@ -647,6 +788,118 @@ function App() {
     },
   };
 
+  // Chart month current phase 1 level options
+  const chartCurrent1LevelOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: false,
+        text: "Current Phase 1 Level Entries (Last 30 Days)",
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Date",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Current Phase 1",
+        },
+      },
+    },
+  };
+
+  // Chart month current phase 2 level options
+  const chartCurrent2LevelOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: false,
+        text: "Current Phase 2 Level Entries (Last 30 Days)",
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Date",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Current Phase 2",
+        },
+      },
+    },
+  };
+
+  // Chart month current phase 3 level options
+  const chartCurrent3LevelOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: false,
+        text: "Current Phase 3 Level Entries (Last 30 Days)",
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Date",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Current Phase 3",
+        },
+      },
+    },
+  };
+
+  // Chart month current phase 3 level options
+  const chartTotalPowerLevelOptions = {
+    responsive: true,
+    plugins: {
+      legend: {
+        position: "top",
+      },
+      title: {
+        display: false,
+        text: "Current Total Power Level Entries (Last 30 Days)",
+      },
+    },
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: "Date",
+        },
+      },
+      y: {
+        title: {
+          display: true,
+          text: "Total Power",
+        },
+      },
+    },
+  };
+
   return (
     <>
       <div className="main">
@@ -659,7 +912,8 @@ function App() {
             />
           </div>
           <div className="control-panel">
-            <img src={`./ControlPanelIcon.svg`} alt="control panel" /> Control panel
+            <img src={`./ControlPanelIcon.svg`} alt="control panel" /> Control
+            panel
           </div>
           <div className="floor-plan">
             <img src={`./FloorPlanIcon.svg`} alt="floor plan" /> Floor Plan
@@ -723,14 +977,14 @@ function App() {
                 <div className="chartcard">
                   <h4 className="chartcard-h4">Humidity</h4>
                   <div className="number-display" style={{ marginTop: "1rem" }}>
-                    {currentHumidity}%
+                    {currentHumidity}%RH
                   </div>
                 </div>
                 {/* Smoke Level */}
                 <div className="chartcard">
                   <h4 className="chartcard-h4">Smoke Level</h4>
                   <div className="number-display" style={{ marginTop: "1rem" }}>
-                    {currentSmokeLevel}
+                    {currentSmokeLevel} ppm
                   </div>
                 </div>
                 {/* Voltage Phases */}
@@ -833,7 +1087,7 @@ function App() {
                     {chartVoltage1Data.labels ? (
                       <Line
                         data={chartVoltage1Data}
-                        options={chartVoltage1LevelOptions}
+                        options={chartVoltageOneLevelOptions}
                       />
                     ) : (
                       <p>Loading chart...</p>
@@ -864,6 +1118,66 @@ function App() {
                       <Line
                         data={chartVoltage3Data}
                         options={chartVoltage3LevelOptions}
+                      />
+                    ) : (
+                      <p>Loading chart...</p>
+                    )}
+                  </div>
+                </div>
+                <div className="chartcard">
+                  <h4 className="chartcard-h4">
+                    Last 30 Days Current Phase 1 Level Chart
+                  </h4>
+                  <div className="chartcard currentPhase">
+                    {chartCurrent1Data.labels ? (
+                      <Line
+                        data={chartCurrent1Data}
+                        options={chartCurrent1LevelOptions}
+                      />
+                    ) : (
+                      <p>Loading chart...</p>
+                    )}
+                  </div>
+                </div>
+                <div className="chartcard">
+                  <h4 className="chartcard-h4">
+                    Last 30 Days Current Phase 2 Level Chart
+                  </h4>
+                  <div className="chartcard currentPhase">
+                    {chartCurrent2Data.labels ? (
+                      <Line
+                        data={chartCurrent2Data}
+                        options={chartCurrent2LevelOptions}
+                      />
+                    ) : (
+                      <p>Loading chart...</p>
+                    )}
+                  </div>
+                </div>
+                <div className="chartcard">
+                  <h4 className="chartcard-h4">
+                    Last 30 Days Current Phase 3 Level Chart
+                  </h4>
+                  <div className="chartcard currentPhase">
+                    {chartCurrent3Data.labels ? (
+                      <Line
+                        data={chartCurrent3Data}
+                        options={chartCurrent3LevelOptions}
+                      />
+                    ) : (
+                      <p>Loading chart...</p>
+                    )}
+                  </div>
+                </div>
+                <div className="chartcard">
+                  <h4 className="chartcard-h4">
+                    Last 30 Days Total Power Level Chart
+                  </h4>
+                  <div className="chartcard totalPowerPhase">
+                    {chartTotalPowerData.labels ? (
+                      <Line
+                        data={chartTotalPowerData}
+                        options={chartTotalPowerLevelOptions}
                       />
                     ) : (
                       <p>Loading chart...</p>
