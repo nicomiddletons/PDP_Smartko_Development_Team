@@ -1,5 +1,6 @@
 import "./App.css";
 import { Line } from "react-chartjs-2";
+import Chart, { Chart as ChartJS } from "chart.js/auto";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
@@ -9,10 +10,10 @@ import TabPanel from "@mui/lab/TabPanel";
 
 //import switchData from "./data/test.json";
 import { useEffect, useState } from "react";
-//import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 function App() {
-  const [axioData, setAxiosData] = useState([]);
+  const [axiosData, setAxiosData] = useState([]);
   //current
   const [currentTemp, setCurrentTemp] = useState(0);
   const [currentHumidity, setCurrentHumidity] = useState(0);
@@ -913,6 +914,7 @@ function App() {
       },
     },
   };
+  
   // Chart month current phase 1 level options
   const chartCurrent1LevelOptions = {
     responsive: true,
@@ -1219,13 +1221,13 @@ function App() {
                 </div>
                 <div className="chartcard">
                   <h4 className="chartcard-h4">Voltage Phase 1, 2, 3 Trend (Yearly)</h4>
-                  <div className="chartcard voltagePhase">
+                  <div className="chartcard voltageYearlyPhase">
                     <Line data={chartYearlyVoltage1Data} />
                   </div>
                 </div>
                 <div className="chartcard">
                   <h4 className="chartcard-h4">Current Phase 1, 2, 3 Trend (Yearly)</h4>
-                  <div className="chartcard currentPhase">
+                  <div className="chartcard currentYearlyPhase">
                     <Line data={chartYearlyCurrent1Data} />
                   </div>
                 </div>

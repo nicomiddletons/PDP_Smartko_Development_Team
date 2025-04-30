@@ -255,7 +255,7 @@ h3 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 90%;
+  height: 80%;
   color: #efefef;
 }
 
@@ -264,11 +264,29 @@ h3 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 90%;
+  height: 80%;
   color: #efefef;
 }
 
 .totalPowerPhase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+  color: #efefef;
+}
+
+.voltageYearlyPhase {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90%;
+  color: #efefef;
+}
+
+.currentYearlyPhase {
   display: flex;
   flex-direction: column;
   align-items: center;
