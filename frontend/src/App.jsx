@@ -1,6 +1,5 @@
 import "./App.css";
-import Chart, { Chart as ChartJS } from "chart.js/auto";
-import { Doughnut, Line } from "react-chartjs-2";
+import { Line } from "react-chartjs-2";
 import axios from "axios";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
@@ -8,12 +7,12 @@ import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
 
-import switchData from "./data/test.json";
+//import switchData from "./data/test.json";
 import { useEffect, useState } from "react";
-import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+//import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 function App() {
-  const [axiosData, setAxiosData] = useState([]);
+  const [axioData, setAxiosData] = useState([]);
   //current
   const [currentTemp, setCurrentTemp] = useState(0);
   const [currentHumidity, setCurrentHumidity] = useState(0);
@@ -695,101 +694,101 @@ function App() {
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
-  const createGradient = (ctx, chartArea) => {
-    let gradient = ctx.createLinearGradient(
-      chartArea.right,
-      0,
-      chartArea.left,
-      0
-    );
-    gradient.addColorStop(0, "#A9D5C0"); // Start Color (Blue)
-    gradient.addColorStop(0.7, "#21668D"); // Keep Dark Blue for 70%
-    gradient.addColorStop(1, "#21668D"); // End Color (Green)
-    return gradient;
-  };
+  // const createGradient = (ctx, chartArea) => {
+  //   let gradient = ctx.createLinearGradient(
+  //     chartArea.right,
+  //     0,
+  //     chartArea.left,
+  //     0
+  //   );
+  //   gradient.addColorStop(0, "#A9D5C0"); // Start Color (Blue)
+  //   gradient.addColorStop(0.7, "#21668D"); // Keep Dark Blue for 70%
+  //   gradient.addColorStop(1, "#21668D"); // End Color (Green)
+  //   return gradient;
+  // };
 
   // temperature gauge chart
-  const gaugeTempData = {
-    labels: ["Temperature"],
-    datasets: [
-      {
-        data: [currentTemp, 100 - currentTemp], // out of 100
-        backgroundColor: (ctx) => {
-          const chart = ctx.chart;
-          if (!chart.chartArea) return ["#36A2EB", "#E0E0E0"]; // Fallback colors
+  // const gaugeTempData = {
+  //   labels: ["Temperature"],
+  //   datasets: [
+  //     {
+  //       data: [currentTemp, 100 - currentTemp], // out of 100
+  //       backgroundColor: (ctx) => {
+  //         const chart = ctx.chart;
+  //         if (!chart.chartArea) return ["#36A2EB", "#E0E0E0"]; // Fallback colors
 
-          return [createGradient(ctx.chart.ctx, chart.chartArea), "#272E44"];
-        },
-        borderWidth: 8, // Outer border thickness
-        borderColor: "#3E5B74", // Outer ring color
-        cutout: "70%", // Makes the circle thin from inside
-        hoverBorderColor: ["#272E44", "#272E44"], // Inner border color (when hovered)
-        hoverBorderWidth: 2, // Inner border thickness
-      },
-    ],
-  };
+  //         return [createGradient(ctx.chart.ctx, chart.chartArea), "#272E44"];
+  //       },
+  //       borderWidth: 8, // Outer border thickness
+  //       borderColor: "#3E5B74", // Outer ring color
+  //       cutout: "70%", // Makes the circle thin from inside
+  //       hoverBorderColor: ["#272E44", "#272E44"], // Inner border color (when hovered)
+  //       hoverBorderWidth: 2, // Inner border thickness
+  //     },
+  //   ],
+  // };
 
   // humidity gauge chart
-  const gaugeHumidityData = {
-    labels: ["Humidity"],
-    datasets: [
-      {
-        data: [currentHumidity, 100 - currentHumidity], // out of 100
-        backgroundColor: (ctx) => {
-          const chart = ctx.chart;
-          if (!chart.chartArea) return ["#36A2EB", "#E0E0E0"]; // Fallback colors
+  // const gaugeHumidityData = {
+  //   labels: ["Humidity"],
+  //   datasets: [
+  //     {
+  //       data: [currentHumidity, 100 - currentHumidity], // out of 100
+  //       backgroundColor: (ctx) => {
+  //         const chart = ctx.chart;
+  //         if (!chart.chartArea) return ["#36A2EB", "#E0E0E0"]; // Fallback colors
 
-          return [createGradient(ctx.chart.ctx, chart.chartArea), "#272E44"];
-        },
-        borderWidth: 8, // Outer border thickness
-        borderColor: "#3E5B74", // Outer ring color
-        cutout: "70%", // Makes the circle thin from inside
-        hoverBorderColor: ["#272E44", "#272E44"], // Inner border color (when hovered)
-        hoverBorderWidth: 2, // Inner border thickness
-      },
-    ],
-  };
+  //         return [createGradient(ctx.chart.ctx, chart.chartArea), "#272E44"];
+  //       },
+  //       borderWidth: 8, // Outer border thickness
+  //       borderColor: "#3E5B74", // Outer ring color
+  //       cutout: "70%", // Makes the circle thin from inside
+  //       hoverBorderColor: ["#272E44", "#272E44"], // Inner border color (when hovered)
+  //       hoverBorderWidth: 2, // Inner border thickness
+  //     },
+  //   ],
+  // };
 
   // smoke level gauge chart
-  const gaugeSmokeLevelData = {
-    labels: ["Smoke Level"],
-    datasets: [
-      {
-        data: [currentSmokeLevel, 1000 - currentSmokeLevel], // out of 1000
-        backgroundColor: (ctx) => {
-          const chart = ctx.chart;
-          if (!chart.chartArea) return ["#36A2EB", "#E0E0E0"]; // Fallback colors
+  // const gaugeSmokeLevelData = {
+  //   labels: ["Smoke Level"],
+  //   datasets: [
+  //     {
+  //       data: [currentSmokeLevel, 1000 - currentSmokeLevel], // out of 1000
+  //       backgroundColor: (ctx) => {
+  //         const chart = ctx.chart;
+  //         if (!chart.chartArea) return ["#36A2EB", "#E0E0E0"]; // Fallback colors
 
-          return [createGradient(ctx.chart.ctx, chart.chartArea), "#272E44"];
-        },
-        borderWidth: 8, // Outer border thickness
-        borderColor: "#3E5B74", // Outer ring color
-        cutout: "70%", // Makes the circle thin from inside
-        hoverBorderColor: ["#272E44", "#272E44"], // Inner border color (when hovered)
-        hoverBorderWidth: 2, // Inner border thickness
-      },
-    ],
-  };
+  //         return [createGradient(ctx.chart.ctx, chart.chartArea), "#272E44"];
+  //       },
+  //       borderWidth: 8, // Outer border thickness
+  //       borderColor: "#3E5B74", // Outer ring color
+  //       cutout: "70%", // Makes the circle thin from inside
+  //       hoverBorderColor: ["#272E44", "#272E44"], // Inner border color (when hovered)
+  //       hoverBorderWidth: 2, // Inner border thickness
+  //     },
+  //   ],
+  // };
 
   // Options for any gauge chart
-  const gaugeOptions = {
-    aspectRatio: 1.5,
-    circumference: 360,
-    rotation: -90,
-    plugins: {
-      tooltip: {
-        enabled: false,
-      },
-      legend: {
-        display: false,
-      },
-    },
-    elements: {
-      arc: {
-        borderJoinStyle: "round", // Smooth edges
-      },
-    },
-  };
+  // const gaugeOptions = {
+  //   aspectRatio: 1.5,
+  //   circumference: 360,
+  //   rotation: -90,
+  //   plugins: {
+  //     tooltip: {
+  //       enabled: false,
+  //     },
+  //     legend: {
+  //       display: false,
+  //     },
+  //   },
+  //   elements: {
+  //     arc: {
+  //       borderJoinStyle: "round", // Smooth edges
+  //     },
+  //   },
+  // };
 
   const [value, setValue] = useState("1");
 
@@ -797,11 +796,11 @@ function App() {
     setValue(newValue);
   };
 
-  const [switchSelection, setSwitchSelection] = useState("");
+  // const [switchSelection, setSwitchSelection] = useState("");
 
-  const handleSwitchSelection = (event) => {
-    setSwitchSelection(event.target.value);
-  };
+  // const handleSwitchSelection = (event) => {
+  //   setSwitchSelection(event.target.value);
+  // };
 
   // Chart month temp options
   const chartTempOptions = {
@@ -914,63 +913,6 @@ function App() {
       },
     },
   };
-
-  // Chart month voltage phase 2 level options
-  const chartVoltage2LevelOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: false,
-        text: "Voltage Phase 2 Level Entries (Last 30 Days)",
-      },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Date",
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Voltage Phase 2",
-        },
-      },
-    },
-  };
-
-  // Chart month voltage phase 3 level options
-  const chartVoltage3LevelOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: false,
-        text: "Voltage Phase 3 Level Entries (Last 30 Days)",
-      },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Date",
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Voltage Phase 3",
-        },
-      },
-    },
-  };
-
   // Chart month current phase 1 level options
   const chartCurrent1LevelOptions = {
     responsive: true,
@@ -994,62 +936,6 @@ function App() {
         title: {
           display: true,
           text: "Current Phase 1 2 3",
-        },
-      },
-    },
-  };
-
-  // Chart month current phase 2 level options
-  const chartCurrent2LevelOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: false,
-        text: "Current Phase 2 Level Entries (Last 30 Days)",
-      },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Date",
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Current Phase 2",
-        },
-      },
-    },
-  };
-
-  // Chart month current phase 3 level options
-  const chartCurrent3LevelOptions = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: false,
-        text: "Current Phase 3 Level Entries (Last 30 Days)",
-      },
-    },
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: "Date",
-        },
-      },
-      y: {
-        title: {
-          display: true,
-          text: "Current Phase 3",
         },
       },
     },
