@@ -1,5 +1,5 @@
 .root {
-  background-color: #21668d;
+  background-color: #3E5372;
   width: 100%;
   height: 100%;
 }
@@ -9,7 +9,7 @@
   width: 100%;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  background-color: #21668d;
+  background-color: #3E5372;
 }
 
 .graph {
@@ -22,7 +22,7 @@
   padding: 2vw;
   align-items: center;
   justify-content: center;
-  background-color: #21668d;
+  background-color: #3E5372;
 }
 
 h2 {
@@ -35,7 +35,7 @@ h3 {
 
 .panel {
   display: grid;
-  grid-template-columns: 3fr 1fr 1fr 1fr;
+  grid-template-columns: 7fr 1fr 1fr 1fr;
   padding: 10px;
   background-color: #0f141e;
   width: auto;
@@ -133,23 +133,24 @@ h3 {
 }
 
 .tabs-panel {
-  background-color: #21668d;
+  background-color: #3E5372;
   height: 100%;
   width: 100%;
 }
 
 .chartcard {
-  background-color: #272e44;
-  border-radius: 0.5em;
+  background-color: #0F141E;
+  border-radius: 0.8em;
   padding: 1em;
   height: 100%;
 }
 
 .chartcard-h4 {
-  color: #a8e6ff;
+  color: #ffffff;
   font-size: 23px;
   font-weight: bold;
   margin-bottom: 0.75rem;
+  padding: 0;
 }
 
 .temperature {
@@ -157,8 +158,9 @@ h3 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 90%;
+  height: 85%;
   color: #efefef;
+  padding: 0;
 }
 
 .temp-text {
@@ -176,8 +178,9 @@ h3 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 90%;
+  height: 85%;
   color: #efefef;
+  padding: 0;
 }
 
 .humidity-text {
@@ -195,8 +198,9 @@ h3 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 90%;
+  height: 85%;
   color: #efefef;
+  padding: 0;
 }
 
 .smoke-level-text {
@@ -217,12 +221,23 @@ h3 {
 }
 
 .number-display {
-  background-color: #44829A;
-  color: white;
+  background-color: #4D566A;
+  color: black;
   font-size: 1.5rem;
   font-weight: normal;
   text-align: center;
   padding: 1rem;
+  border-radius: 8px;
+  margin-top: 0.75rem;
+}
+
+.num-display {
+  background-color: #4D566A;
+  color: black;
+  font-size: 1.5rem;
+  font-weight: normal;
+  text-align: center;
+  padding: 1.8rem;
   border-radius: 8px;
   margin-top: 0.75rem;
 }
@@ -250,13 +265,19 @@ h3 {
   margin-top: 0;
 }
 
+.phase-grid .num-display {
+  width: 100%; 
+  margin-top: 0;
+}
+
 .voltagePhase {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 80%;
+  height: 85%;
   color: #efefef;
+  padding: 0;
 }
 
 .currentPhase {
@@ -264,8 +285,9 @@ h3 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 80%;
+  height: 85%;
   color: #efefef;
+  padding: 0;
 }
 
 .totalPowerPhase {
@@ -273,8 +295,9 @@ h3 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 90%;
+  height: 85%;
   color: #efefef;
+  padding: 0;
 }
 
 .voltageYearlyPhase {
@@ -282,8 +305,9 @@ h3 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 90%;
+  height: 85%;
   color: #efefef;
+  padding: 0;
 }
 
 .currentYearlyPhase {
@@ -291,6 +315,7 @@ h3 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 90%;
+  height: 85%;
   color: #efefef;
+  padding: 0;
 }
