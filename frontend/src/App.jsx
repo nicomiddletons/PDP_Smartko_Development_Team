@@ -437,8 +437,8 @@ function App() {
             {
               //label: "Temperature (°C)",
               data: tempPoints,
-              borderColor: "#36A2EB",
-              backgroundColor: "rgba(54, 162, 235, 0.2)",
+              borderColor: "#D5C67A",
+              backgroundColor: "rgba(213, 198, 122, 1)",
               tension: 0.4,
             },
           ],
@@ -451,8 +451,8 @@ function App() {
             {
               label: "Humidity (%)",
               data: humidityPoints,
-              borderColor: "#FF6384",
-              backgroundColor: "rgba(255, 99, 132, 0.2)",
+              borderColor: "#D5C67A",
+              backgroundColor: "rgba(213, 198, 122, 1)",
               tension: 0.4,
             },
           ],
@@ -465,8 +465,8 @@ function App() {
             {
               label: "Smoke Level",
               data: smokePoints,
-              borderColor: "#A9D5C0",
-              backgroundColor: "rgba(169, 213, 192, 0.2)",
+              borderColor: "#D5C67A",
+              backgroundColor: "rgba(213, 198, 122, 1)",
               tension: 0.4,
             },
           ],
@@ -479,22 +479,22 @@ function App() {
             {
               label: "Phase 1",
               data: voltagePoints1,
-              borderColor: "#e2ea10e3",
-              backgroundColor: "rgba(226, 234, 16, 0.89)",
+              borderColor: "#D5C67A",
+              backgroundColor: "rgba(213, 198, 122, 1)",
               tension: 0.4,
             },
             {
               label: "Phase 2",
               data: voltagePoints2,
-              borderColor: "#0f70f8f2",
-              backgroundColor: "rgba(15, 112, 248, 0.95)",
+              borderColor: "#62BBC1",
+              backgroundColor: "rgba(98, 187, 193, 1)",
               tension: 0.4,
             },
             {
               label: "Phase 3",
               data: voltagePoints3,
-              borderColor: "#8202f9",
-              backgroundColor: "rgb(130, 2, 249)",
+              borderColor: "#D81E5B",
+              backgroundColor: "rgba(216, 30, 91, 1)",
               tension: 0.4,
             },
           ],
@@ -507,8 +507,8 @@ function App() {
             {
               label: "Phase 2",
               data: voltagePoints2,
-              borderColor: "#A9D5C0",
-              backgroundColor: "rgb(247, 85, 4)",
+              borderColor: "#62BBC1",
+              backgroundColor: "rgba(98, 187, 193, 1)",
               tension: 0.4,
             },
           ],
@@ -521,8 +521,8 @@ function App() {
             {
               label: "Phase 3",
               data: voltagePoints3,
-              borderColor: "#A9D5C0",
-              backgroundColor: "rgba(169, 213, 192, 0.2)",
+              borderColor: "#D81E5B",
+              backgroundColor: "rgba(216, 30, 91, 1)",
               tension: 0.4,
             },
           ],
@@ -535,22 +535,22 @@ function App() {
             {
               label: "Phase 1",
               data: currentPoints1,
-              borderColor: "#f755",
-              backgroundColor: "rgb(247, 85, 4)",
+              borderColor: "#D5C67A",
+              backgroundColor: "rgba(213, 198, 122, 1)",
               tension: 0.4,
             },
             {
               label: "Phase 2",
               data: currentPoints2,
-              borderColor: "#02d7fc",
-              backgroundColor: "rgb(2, 215, 252)",
+              borderColor: "#62BBC1",
+              backgroundColor: "rgba(98, 187, 193, 1)",
               tension: 0.4,
             },
             {
               label: "Phase 3",
               data: currentPoints3,
-              borderColor: "#fb12b1f0",
-              backgroundColor: "rgba(251, 18, 177, 0.94)",
+              borderColor: "#D81E5B",
+              backgroundColor: "rgba(216, 30, 91, 1)",
               tension: 0.4,
             },
           ],
@@ -563,8 +563,8 @@ function App() {
             {
               label: "Phase 2",
               data: currentPoints2,
-              borderColor: "#A9D5C0",
-              backgroundColor: "rgba(169, 213, 192, 0.2)",
+              borderColor: "#62BBC1",
+              backgroundColor: "rgba(98, 187, 193, 1)",
               tension: 0.4,
             },
           ],
@@ -577,8 +577,8 @@ function App() {
             {
               label: "Phase 3",
               data: currentPoints3,
-              borderColor: "#A9D5C0",
-              backgroundColor: "rgba(169, 213, 192, 0.2)",
+              borderColor: "#D81E5B",
+              backgroundColor: "rgba(216, 30, 91, 1)",
               tension: 0.4,
             },
           ],
@@ -591,8 +591,8 @@ function App() {
             {
               label: "Total Power",
               data: totalPowerPoints,
-              borderColor: "#f5cd3c",
-              backgroundColor: "rgb(245, 205, 60)",
+              borderColor: "#D5C67A",
+              backgroundColor: "rgba(213, 198, 122, 1)",
               tension: 0.4,
             },
           ],
@@ -604,8 +604,8 @@ function App() {
             {
               // label: "Temperature (°C) - Current Year",
               data: yearlyTempPoints,
-              borderColor: "#4CAF50",
-              backgroundColor: "rgba(76, 175, 80, 0.2)",
+              borderColor: "#D5C67A",
+              backgroundColor: "rgba(213, 198, 122, 1)",
               tension: 0.4,
             },
           ],
@@ -618,8 +618,8 @@ function App() {
             {
               // label: "Humidity",
               data: yearlyHumidityPoints,
-              borderColor: "#FF5733",
-              backgroundColor: "rgba(255, 87, 51, 0.2)",
+              borderColor: "#D5C67A",
+              backgroundColor: "rgba(213, 198, 122, 1)",
               tension: 0.4,
             },
           ],
@@ -632,8 +632,8 @@ function App() {
             {
               // label: "Smoke Level",
               data: yearlySmokePoints,
-              borderColor: "#ECDBE9",
-              backgroundColor: "rgba(236, 219, 233, 1)",
+              borderColor: "#D5C67A",
+              backgroundColor: "rgba(213, 198, 122, 1)",
               tension: 0.4,
             },
           ],
@@ -646,22 +646,22 @@ function App() {
             {
               label: "Phase 1",
               data: yearlyVoltage1Points,
-              borderColor: "#FF5733",
-              backgroundColor: "rgba(255, 87, 51, 0.2)",
+              borderColor: "#D5C67A",
+              backgroundColor: "rgba(213, 198, 122, 1)",
               tension: 0.4,
             },
             {
               label: "Phase 2",
               data: yearlyVoltage2Points,
-              borderColor: "#FF5733",
-              backgroundColor: "rgba(255, 87, 51, 0.2)",
+              borderColor: "#62BBC1",
+              backgroundColor: "rgba(98, 187, 193, 1)",
               tension: 0.4,
             },
             {
               label: "Phase 3",
               data: yearlyVoltage3Points,
-              borderColor: "#FF5733",
-              backgroundColor: "rgba(255, 87, 51, 0.2)",
+              borderColor: "#D81E5B",
+              backgroundColor: "rgba(216, 30, 91, 1)",
               tension: 0.4,
             },
           ],
@@ -674,22 +674,22 @@ function App() {
             {
               label: "Phase 1",
               data: yearlyCurrent1Points,
-              borderColor: "#FF5733",
-              backgroundColor: "rgba(255, 87, 51, 0.2)",
+              borderColor: "#D5C67A",
+              backgroundColor: "rgba(213, 198, 122, 1)",
               tension: 0.4,
             },
             {
               label: "Phase 2",
               data: yearlyCurrent2Points,
-              borderColor: "#FF5733",
-              backgroundColor: "rgba(255, 87, 51, 0.2)",
+              borderColor: "#62BBC1",
+              backgroundColor: "rgba(98, 187, 193, 1)",
               tension: 0.4,
             },
             {
               label: "Phase 3",
               data: yearlyCurrent3Points,
-              borderColor: "#FF5733",
-              backgroundColor: "rgba(255, 87, 51, 0.2)",
+              borderColor: "#D81E5B",
+              backgroundColor: "rgba(216, 30, 91, 1)",
               tension: 0.4,
             },
           ],
@@ -701,8 +701,8 @@ function App() {
             {
               // label: "Total Power Current Year",
               data: yearlyTotalPowerPoints,
-              borderColor: "#4CAF50",
-              backgroundColor: "rgba(76, 175, 80, 0.2)",
+              borderColor: "#D5C67A",
+              backgroundColor: "rgba(213, 198, 122, 1)",
               tension: 0.4,
             },
           ],
@@ -1035,20 +1035,19 @@ function App() {
         <div className="panel">
           <div className="katkologo">
             <img
-              src={`./smartko_logo_2.svg`}
+              src={`./newlogo.svg`}
               alt="KatkoLogo"
               className="logo-img"
             />
           </div>
           <div className="control-panel">
-            <img src={`./ControlPanelIcon.svg`} alt="control panel" /> Control
-            panel
+            <img src={`./CONTROL_PANEL.svg`} alt="control panel" />
           </div>
           <div className="floor-plan">
-            <img src={`./FloorPlanIcon.svg`} alt="floor plan" /> Floor Plan
+            <img src={`./FLOOR_PLAN.svg`} alt="floor plan" />
           </div>
           <div className="account">
-            <img src={`./account.svg`} alt="control panel" /> Account
+            <img src={`./ACCOUNT.svg`} alt="control panel" />
           </div>
         </div>
         <div className="sub-panel">
@@ -1075,11 +1074,11 @@ function App() {
                       color: "#ffffff", // Default text color
                     },
                     "& .Mui-selected": {
-                      color: "#0F141E", // Selected tab text color
+                      color: "#8590a7", // Selected tab text color
                       fontWeight: "bold",
                     },
                     "& .MuiTabs-indicator": {
-                      backgroundColor: "#0F141E", // underline indicator color
+                      backgroundColor: "#8590a7", // underline indicator color
                     },
                   }}
                 >
@@ -1250,37 +1249,55 @@ function App() {
                 <div className="chartcard">
                   <h4 className="chartcard-h4">Temperature</h4>
                   <div className="chartcard temperature">
-                    <Line data={chartYearlyTempData} options={chartYearlyOptions}/>
+                    <Line
+                      data={chartYearlyTempData}
+                      options={chartYearlyOptions}
+                    />
                   </div>
                 </div>
                 <div className="chartcard">
                   <h4 className="chartcard-h4">Humidity</h4>
                   <div className="chartcard humidity">
-                    <Line data={chartYearlyHumidityData} options={chartYearlyOptions} />
+                    <Line
+                      data={chartYearlyHumidityData}
+                      options={chartYearlyOptions}
+                    />
                   </div>
                 </div>
                 <div className="chartcard">
                   <h4 className="chartcard-h4">Smoke Level</h4>
                   <div className="chartcard smoke_level">
-                    <Line data={chartYearlySmokeData} options={chartYearlyOptions} />
+                    <Line
+                      data={chartYearlySmokeData}
+                      options={chartYearlyOptions}
+                    />
                   </div>
                 </div>
                 <div className="chartcard">
                   <h4 className="chartcard-h4">Voltage</h4>
                   <div className="chartcard voltageYearlyPhase">
-                    <Line data={chartYearlyVoltage1Data} options={chartVoltCurrentYearlyOptions} />
+                    <Line
+                      data={chartYearlyVoltage1Data}
+                      options={chartVoltCurrentYearlyOptions}
+                    />
                   </div>
                 </div>
                 <div className="chartcard">
                   <h4 className="chartcard-h4">Current</h4>
                   <div className="chartcard currentYearlyPhase">
-                    <Line data={chartYearlyCurrent1Data} options={chartVoltCurrentYearlyOptions}/>
+                    <Line
+                      data={chartYearlyCurrent1Data}
+                      options={chartVoltCurrentYearlyOptions}
+                    />
                   </div>
                 </div>
                 <div className="chartcard">
                   <h4 className="chartcard-h4">Total Power</h4>
                   <div className="chartcard totalPowerPhase">
-                    <Line data={chartYearlyTotalPowerData} options={chartYearlyOptions}/>
+                    <Line
+                      data={chartYearlyTotalPowerData}
+                      options={chartYearlyOptions}
+                    />
                   </div>
                 </div>
               </div>

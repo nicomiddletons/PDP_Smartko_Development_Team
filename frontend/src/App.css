@@ -49,8 +49,9 @@ h3 {
 
 .logo-img {
   width: 40%;
-  height: 150px;
+  height: 100px;
   padding-left: 40px;
+  padding-top: 30px;
 }
 
 .control-panel {
@@ -105,25 +106,25 @@ h3 {
 
 .form-control-select .MuiFilledInput-root {
   border-radius: 20px; /* Adjust the border radius as desired */
-  background-color: #729ab8; /* Example background color */
+  background-color: #3E5372; /* Example background color */
   color: white; /* Example text color */
 }
 .form-control-select .MuiFilledInput-root:hover {
-  background-color: #729ab8; /* Optional: Change color on hover */
+  background-color: #3E5372; /* Optional: Change color on hover */
 }
 
 .form-control-select .MuiInputBase-root {
-  color: #636363; /* Change the Select text color */
+  color: #4D566A; /* Change the Select text color */
 }
 
 .form-control-select .MuiInputLabel-root {
-  color: #636363; /* Change the label text color */
+  color: #4D566A; /* Change the label text color */
 }
 
 .tabs {
   padding-top: 5px;
   float: right;
-  background-color: #729ab8;
+  background-color: #0F141E;
   border-radius: 20px;
   display: flex;
   justify-content: center;
@@ -170,7 +171,7 @@ h3 {
   transform: translate(-50%, -50%);
   font-size: 40px;
   font-weight: bold;
-  color: #a8e6ff;
+  color: #efefef;
 }
 
 .humidity {
@@ -190,7 +191,7 @@ h3 {
   transform: translate(-50%, -50%);
   font-size: 40px;
   font-weight: bold;
-  color: #a8e6ff;
+  color: #4D566A;
 }
 
 .smoke_level {
@@ -210,7 +211,7 @@ h3 {
   transform: translate(-50%, -50%);
   font-size: 40px;
   font-weight: bold;
-  color: #a8e6ff;
+  color: #4D566A;
 }
 
 .numbers-grid {
@@ -222,7 +223,7 @@ h3 {
 
 .number-display {
   background-color: #4D566A;
-  color: black;
+  color: #efefef;
   font-size: 1.5rem;
   font-weight: normal;
   text-align: center;
@@ -233,7 +234,7 @@ h3 {
 
 .num-display {
   background-color: #4D566A;
-  color: black;
+  color: #efefef;
   font-size: 1.5rem;
   font-weight: normal;
   text-align: center;
